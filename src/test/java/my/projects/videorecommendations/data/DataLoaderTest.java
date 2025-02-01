@@ -1,11 +1,13 @@
 package my.projects.videorecommendations.data;
 
+import my.projects.videorecommendations.data.entities.Movie;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 
 public class DataLoaderTest {
 
@@ -14,7 +16,7 @@ public class DataLoaderTest {
         MovieRepository repository = new InMemoryMoviesRepository();
         new DataLoader(repository, resourcesAt("data/empty")).process();
 
-        assertThat(repository.all(), hasSize(0));
+        assertThat(repository.all(), empty());
     }
 
     @Test
@@ -23,6 +25,20 @@ public class DataLoaderTest {
         new DataLoader(repository, resourcesAt("data/full")).process();
 
         assertThat(repository.all(), hasSize(10));
+    }
+
+    @Test
+    void movies_mapping() throws Exception {
+        MovieRepository repository = new InMemoryMoviesRepository();
+        new DataLoader(repository, resourcesAt("data/full")).process();
+
+        // 1,Toy Story,Adventure|Animation|Children|Comedy|Fantasy
+        assertThat(repository.all(), hasItem(Movie.builder()
+                .id("1")
+                .title("Toy Story")
+                .genres(Arrays.asList("Adventure", "Animation", "Children", "Comedy", "Fantasy"))
+                .build()
+        ));
     }
 
     private Path resourcesAt(String location) throws Exception {
