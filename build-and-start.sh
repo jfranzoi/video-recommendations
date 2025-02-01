@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-./mvnw clean package -DskipTests
+echo "Building..."
+docker compose -f docker/compose.yml --profile build up
 
-docker compose -f docker/compose.yml up --build
+echo "Starting..."
+docker compose -f docker/compose.yml --profile deploy up --build
 
 # See http://localhost:8080/actuator/env

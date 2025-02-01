@@ -1,5 +1,15 @@
 services:
+
+  builder:
+    profiles: [ build ]
+    image: eclipse-temurin:17-jdk
+    entrypoint: ./mvnw clean package -DskipTests
+    working_dir: /app
+    volumes:
+      - ..:/app
+
   app:
+    profiles: [ deploy ]
     build:
       context: ..
       dockerfile: docker/Dockerfile
