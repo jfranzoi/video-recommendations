@@ -1,5 +1,7 @@
-package my.projects.videorecommendations.data;
+package my.projects.videorecommendations.init;
 
+import my.projects.videorecommendations.dummies.InMemoryMoviesRepository;
+import my.projects.videorecommendations.data.MovieRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import org.junit.jupiter.api.Test;
 

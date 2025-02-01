@@ -1,5 +1,6 @@
-package my.projects.videorecommendations.data;
+package my.projects.videorecommendations.dummies;
 
+import my.projects.videorecommendations.data.MovieRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 
 import java.util.ArrayList;

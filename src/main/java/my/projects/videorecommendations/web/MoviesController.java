@@ -2,6 +2,8 @@ package my.projects.videorecommendations.web;
 
 import my.projects.videorecommendations.data.MovieRepository;
 import my.projects.videorecommendations.data.entities.Movie;
+import my.projects.videorecommendations.web.entities.MovieReference;
+import my.projects.videorecommendations.web.entities.MovieResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

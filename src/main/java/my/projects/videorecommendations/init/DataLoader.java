@@ -1,9 +1,10 @@
-package my.projects.videorecommendations.data;
+package my.projects.videorecommendations.init;
 
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import my.projects.videorecommendations.data.MovieRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 
 import java.io.IOException;

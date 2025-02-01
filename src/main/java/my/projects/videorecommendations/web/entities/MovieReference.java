@@ -1,4 +1,4 @@
-package my.projects.videorecommendations.web;
+package my.projects.videorecommendations.web.entities;
 
 import lombok.Builder;
 import lombok.Data;
