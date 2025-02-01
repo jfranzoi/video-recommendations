@@ -2,6 +2,8 @@ package my.projects.videorecommendations.web;
 
 import my.projects.videorecommendations.data.MovieRepository;
 import my.projects.videorecommendations.data.entities.Movie;
+import my.projects.videorecommendations.domain.Movies;
+import my.projects.videorecommendations.web.entities.MovieFilter;
 import my.projects.videorecommendations.web.entities.MovieReference;
 import my.projects.videorecommendations.web.entities.MovieResults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,9 @@ public class MoviesController {
     private MovieRepository repository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> all() {
+    public ResponseEntity<?> all(MovieFilter filter) {
         return ResponseEntity.ok(MovieResults.builder()
-                .results(toReferences(repository.findAll()))
+                .results(toReferences(new Movies(repository).all(filter)))
                 .build());
     }
 

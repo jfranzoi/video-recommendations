@@ -10,8 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
         "application.data.folder=src/test/resources/data/full"
@@ -33,6 +32,20 @@ public class MoviesAcceptanceTest {
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.results", hasSize(10)));
+    }
+
+    @Test
+    void listByGenre() {
+        ResponseEntity<String> result = get(locally("/movies?genre=Action"), new HttpHeaders() {{
+            add("Accept", "application/json");
+        }});
+
+        assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody(), hasJsonPath("$.results[*].title", containsInAnyOrder(
+                "Die Hard",
+                "Star Wars: Return of the Jedi",
+                "The Matrix"
+        )));
     }
 
     private ResponseEntity<String> get(String location, HttpHeaders headers) {
