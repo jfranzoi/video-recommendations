@@ -1,7 +1,7 @@
 # TODO
 
 * movies
-  - (WIP) movies, list all
+  - (DONE) movies, list all
   - (TODO) movies, list by genre
   - (TODO) movies, list by min (avg) rating
   - (TODO) movies, list by max (avg) rating
