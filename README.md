@@ -4,7 +4,7 @@ Sample API for solving the "Video Recommendations" coding problem.
 
 ## Tooling
 
-* Java 17. see also [.sdkmanrc](./.sdkmanrc) file for [sdkman](https://sdkman.io/)
+* Java 17, via [sdkman](https://sdkman.io/), to be portable. See [.sdkmanrc](./.sdkmanrc) file
 * maven, via maven wrapper, to be portable
 * Spring Boot 3.4.x
 * docker and docker compose

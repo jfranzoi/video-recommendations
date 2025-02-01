@@ -27,7 +27,7 @@
   - (DONE) git repo
   - (TODO) data files
   - (DONE) docker compose
-  - (WIP) README.md
+  - (DONE) README.md
   - (TODO) [NTH] API spec
   - (TODO) [NTH] DB schema: DB design choices
   - (TODO) [NTH] service metrics exposed + logging
