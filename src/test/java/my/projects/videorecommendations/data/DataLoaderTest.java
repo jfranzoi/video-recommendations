@@ -16,7 +16,7 @@ public class DataLoaderTest {
         MovieRepository repository = new InMemoryMoviesRepository();
         new DataLoader(repository, resourcesAt("data/empty")).process();
 
-        assertThat(repository.all(), empty());
+        assertThat(repository.findAll(), empty());
     }
 
     @Test
@@ -24,7 +24,7 @@ public class DataLoaderTest {
         MovieRepository repository = new InMemoryMoviesRepository();
         new DataLoader(repository, resourcesAt("data/full")).process();
 
-        assertThat(repository.all(), hasSize(10));
+        assertThat(repository.findAll(), hasSize(10));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class DataLoaderTest {
         new DataLoader(repository, resourcesAt("data/full")).process();
 
         // 1,Toy Story,Adventure|Animation|Children|Comedy|Fantasy
-        assertThat(repository.all(), hasItem(Movie.builder()
+        assertThat(repository.findAll(), hasItem(Movie.builder()
                 .id("1")
                 .title("Toy Story")
                 .genres(Arrays.asList("Adventure", "Animation", "Children", "Comedy", "Fantasy"))

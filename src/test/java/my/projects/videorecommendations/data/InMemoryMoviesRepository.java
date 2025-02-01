@@ -9,7 +9,7 @@ public class InMemoryMoviesRepository implements MovieRepository {
     private ArrayList<Movie> movies = new ArrayList<>();
 
     @Override
-    public List<Movie> all() {
+    public List<Movie> findAll() {
         return movies;
     }
 

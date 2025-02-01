@@ -1,9 +1,11 @@
+name: video-recommendations
+
 services:
 
   builder:
     profiles: [ build ]
     image: eclipse-temurin:17-jdk
-    entrypoint: ./mvnw clean package
+    entrypoint: ./mvnw clean package ${MAVEN_ARGS:-}
     working_dir: /app
     volumes:
       - ..:/app
@@ -15,7 +17,24 @@ services:
       dockerfile: docker/Dockerfile
     environment:
       - APPLICATION_DATA_FOLDER=/app/data
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=postgres
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=secret
     volumes:
       - ../data:/app/data
     ports:
       - "8080:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  db:
+    profiles: [ deploy ]
+    image: postgres:17
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+    ports:
+      - "5432:5432"
