@@ -3,7 +3,7 @@ services:
   builder:
     profiles: [ build ]
     image: eclipse-temurin:17-jdk
-    entrypoint: ./mvnw clean package -DskipTests
+    entrypoint: ./mvnw clean package
     working_dir: /app
     volumes:
       - ..:/app
@@ -13,5 +13,9 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+    environment:
+      - APPLICATION_DATA_FOLDER=/app/data
+    volumes:
+      - ../data:/app/data
     ports:
       - "8080:8080"

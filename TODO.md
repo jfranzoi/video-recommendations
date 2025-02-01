@@ -1,7 +1,7 @@
 # TODO
 
 * movies
-  - (TODO) movies, list all
+  - (WIP) movies, list all
   - (TODO) movies, list by genre
   - (TODO) movies, list by min (avg) rating
   - (TODO) movies, list by max (avg) rating
@@ -25,7 +25,7 @@
 
 * deliverables
   - (DONE) git repo
-  - (TODO) data files
+  - (DONE) data files
   - (DONE) docker compose
   - (DONE) README.md
   - (TODO) [NTH] API spec

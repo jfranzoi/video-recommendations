@@ -7,12 +7,14 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class AppTests {
+@ActiveProfiles({"test"})
+public class AppTests {
 
     @LocalServerPort
     private int port;
@@ -23,7 +25,12 @@ class AppTests {
     @Test
     void applicationStarts() {
         ResponseEntity<String> result = restTemplate.getForEntity(locally("/actuator/env"), String.class);
+
         assertThat(result.getStatusCode().is2xxSuccessful(), is(true));
+        assertThat(result.getBody(), allOf(
+                containsString("application.data.folder"),
+                containsString("/data")
+        ));
     }
 
     private String locally(String value) {
