@@ -4,12 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import my.projects.videorecommendations.data.MovieRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import my.projects.videorecommendations.web.entities.MovieFilter;
-import org.apache.logging.log4j.util.Strings;
-import org.springframework.data.util.Predicates;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Slf4j
 public class Movies {
@@ -21,16 +19,16 @@ public class Movies {
 
     public List<Movie> all(MovieFilter filter) {
         log.info("Collecting movies, by: [{}]", filter);
-        return repository.findAll().stream()
-                .filter(byGenre(filter))
-                .collect(Collectors.toList());
+        return repository.findAll(byGenre(filter));
     }
 
-    private Predicate<Movie> byGenre(MovieFilter genre) {
-        if (Strings.isNotBlank(genre.getGenre())) {
-            return (Movie movie) -> movie.getGenres().contains(genre.getGenre());
-        }
+    private Specification<Movie> byGenre(MovieFilter filter) {
+        return Optional.ofNullable(filter.getGenre())
+                .map(x -> byGenre(x))
+                .orElse(null);
+    }
 
-        return Predicates.isTrue();
+    private Specification<Movie> byGenre(String value) {
+        return (root, query, cb) -> cb.isMember(value, root.get("genres"));
     }
 }

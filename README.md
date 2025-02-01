@@ -46,3 +46,6 @@ Application is tested at multiple levels:
 * component level, eg: for data access and for full application acceptance 
   * Data access tests rely on H2 in-memory database, while an attempt is done in order to mimic real PostgreSQL behaviour. Please, see [application-test.properties](src/test/resources/application-test.properties) for details
   * Application acceptance rely on `@SpringBootTest` listening on a local HTTP port, and a `TestRestTemplate` connecting to it
+
+Persistence layer is a relational database (PostgreSQL) for simplicity. Also, movie genres are mapped as simple array items, 
+given the low volumes of data, in this exercise.

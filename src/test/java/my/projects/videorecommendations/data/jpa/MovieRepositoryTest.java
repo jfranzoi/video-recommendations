@@ -10,8 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(properties = {
         "application.data.folder=src/test/resources/data/empty"
@@ -34,10 +33,10 @@ public class MovieRepositoryTest {
                 .build()
         );
 
-        assertThat(repository.findAll(), contains(
-                Movie.builder()
-                        .id("99").title("Love Boat").genres(Arrays.asList("Comedy", "Romance"))
-                        .build()
-        ));
+        assertThat(repository.findAll(), contains(allOf(
+                hasProperty("id", is("99")),
+                hasProperty("title", is("Love Boat")),
+                hasProperty("genres", contains("Comedy", "Romance"))
+        )));
     }
 }

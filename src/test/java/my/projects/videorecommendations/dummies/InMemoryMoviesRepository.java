@@ -6,7 +6,7 @@ import my.projects.videorecommendations.data.entities.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryMoviesRepository implements MovieRepository {
+public class InMemoryMoviesRepository extends EmptySpecificationRepository<Movie> implements MovieRepository {
     private ArrayList<Movie> movies = new ArrayList<>();
 
     @Override
