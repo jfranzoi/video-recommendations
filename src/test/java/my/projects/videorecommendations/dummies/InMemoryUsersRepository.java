@@ -1,13 +1,13 @@
 package my.projects.videorecommendations.dummies;
 
-import my.projects.videorecommendations.data.UserRepository;
+import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class InMemoryUserRepository implements UserRepository {
+public class InMemoryUsersRepository implements UsersRepository {
     private ArrayList<User> users = new ArrayList<>();
 
     @Override

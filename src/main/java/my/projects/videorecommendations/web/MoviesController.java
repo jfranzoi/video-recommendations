@@ -1,6 +1,6 @@
 package my.projects.videorecommendations.web;
 
-import my.projects.videorecommendations.data.MovieRepository;
+import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import my.projects.videorecommendations.domain.Movies;
 import my.projects.videorecommendations.web.entities.MovieFilter;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class MoviesController {
 
     @Autowired
-    private MovieRepository repository;
+    private MoviesRepository repository;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> all(MovieFilter filter) {

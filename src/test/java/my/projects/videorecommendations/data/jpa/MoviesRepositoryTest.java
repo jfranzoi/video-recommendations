@@ -1,6 +1,6 @@
 package my.projects.videorecommendations.data.jpa;
 
-import my.projects.videorecommendations.data.MovieRepository;
+import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +16,10 @@ import static org.hamcrest.Matchers.*;
         "application.data.folder=src/test/resources/data/empty"
 })
 @ActiveProfiles({"test"})
-public class MovieRepositoryTest {
+public class MoviesRepositoryTest {
 
     @Autowired
-    private MovieRepository repository;
+    private MoviesRepository repository;
 
     @Test
     void none() {

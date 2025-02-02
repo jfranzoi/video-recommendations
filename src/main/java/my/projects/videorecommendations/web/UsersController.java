@@ -1,6 +1,6 @@
 package my.projects.videorecommendations.web;
 
-import my.projects.videorecommendations.data.UserRepository;
+import my.projects.videorecommendations.data.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsersController {
 
     @Autowired
-    private UserRepository repository;
+    private UsersRepository repository;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> byId(@PathVariable String id) {

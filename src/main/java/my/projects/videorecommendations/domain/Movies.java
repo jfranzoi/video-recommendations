@@ -1,7 +1,7 @@
 package my.projects.videorecommendations.domain;
 
 import lombok.extern.slf4j.Slf4j;
-import my.projects.videorecommendations.data.MovieRepository;
+import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import my.projects.videorecommendations.web.entities.MovieFilter;
 import org.springframework.data.jpa.domain.Specification;
@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @Slf4j
 public class Movies {
-    private final MovieRepository repository;
+    private final MoviesRepository repository;
 
-    public Movies(MovieRepository repository) {
+    public Movies(MoviesRepository repository) {
         this.repository = repository;
     }
 

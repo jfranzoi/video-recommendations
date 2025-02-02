@@ -38,4 +38,14 @@ public class MoviesAcceptanceTest extends BaseAcceptanceTest {
                 "The Matrix"
         )));
     }
+
+    @Test
+    void listByGenre_noResults() {
+        ResponseEntity<String> result = get("/movies?genre=Horror", new HttpHeaders() {{
+            add("Accept", "application/json");
+        }});
+
+        assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody(), hasJsonPath("$.results", empty()));
+    }
 }

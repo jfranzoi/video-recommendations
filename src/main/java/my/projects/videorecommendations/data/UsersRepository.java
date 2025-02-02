@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends Repository<User, String> {
+public interface UsersRepository extends Repository<User, String> {
 
     @Query("SELECT u FROM User u where id = :id")
     Optional<User> findBy(@Param("id") String id);

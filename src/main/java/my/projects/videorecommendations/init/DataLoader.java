@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import my.projects.videorecommendations.data.MovieRepository;
-import my.projects.videorecommendations.data.UserRepository;
+import my.projects.videorecommendations.data.MoviesRepository;
+import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import my.projects.videorecommendations.data.entities.User;
 
@@ -20,11 +20,11 @@ import java.util.regex.Pattern;
 public class DataLoader {
     private static final String COLLECTION_SEPARATOR = Pattern.quote("|");
 
-    private final MovieRepository movies;
-    private final UserRepository users;
+    private final MoviesRepository movies;
+    private final UsersRepository users;
     private final CsvMapper mapper;
 
-    public DataLoader(MovieRepository movies, UserRepository users) {
+    public DataLoader(MoviesRepository movies, UsersRepository users) {
         this.movies = movies;
         this.users = users;
         this.mapper = new CsvMapper();

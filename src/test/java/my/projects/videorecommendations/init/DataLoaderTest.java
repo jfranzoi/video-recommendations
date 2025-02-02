@@ -1,10 +1,10 @@
 package my.projects.videorecommendations.init;
 
-import my.projects.videorecommendations.data.MovieRepository;
-import my.projects.videorecommendations.data.UserRepository;
+import my.projects.videorecommendations.data.MoviesRepository;
+import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import my.projects.videorecommendations.dummies.InMemoryMoviesRepository;
-import my.projects.videorecommendations.dummies.InMemoryUserRepository;
+import my.projects.videorecommendations.dummies.InMemoryUsersRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,13 +16,13 @@ import static org.hamcrest.Matchers.*;
 
 public class DataLoaderTest {
 
-    private MovieRepository movies;
-    private UserRepository users;
+    private MoviesRepository movies;
+    private UsersRepository users;
 
     @BeforeEach
     void setUp() {
         movies = new InMemoryMoviesRepository();
-        users = new InMemoryUserRepository();
+        users = new InMemoryUsersRepository();
     }
 
     @Test
