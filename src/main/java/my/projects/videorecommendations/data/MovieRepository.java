@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface MovieRepository extends
         Repository<Movie, String>, JpaSpecificationExecutor<Movie> {
+
     @Query("SELECT m FROM Movie m")
     List<Movie> findAll();
 

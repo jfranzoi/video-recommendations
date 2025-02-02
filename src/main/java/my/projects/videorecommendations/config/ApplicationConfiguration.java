@@ -1,5 +1,6 @@
 package my.projects.videorecommendations.config;
 
+import my.projects.videorecommendations.data.UserRepository;
 import my.projects.videorecommendations.init.DataLoader;
 import my.projects.videorecommendations.data.MovieRepository;
 import my.projects.videorecommendations.init.InitActions;
@@ -17,12 +18,12 @@ import java.nio.file.Path;
 public class ApplicationConfiguration {
 
     @Bean
-    public DataLoader dataLoader(MovieRepository repository, @Value("${application.data.folder}") Path data) {
-        return new DataLoader(repository, data);
+    public DataLoader dataLoader(MovieRepository movies, UserRepository users) {
+        return new DataLoader(movies, users);
     }
 
     @Bean
-    public InitActions initActions(DataLoader dataLoader) {
-        return new InitActions(dataLoader);
+    public InitActions initActions(DataLoader dataLoader, @Value("${application.data.folder}") Path data) {
+        return new InitActions(dataLoader, data);
     }
 }

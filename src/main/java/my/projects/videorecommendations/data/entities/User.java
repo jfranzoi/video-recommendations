@@ -1,25 +1,21 @@
 package my.projects.videorecommendations.data.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "movies")
-public class Movie {
+@Table(name = "users")
+public class User {
     @Id
     private String id;
-
-    private String title;
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> genres;
+    private String name;
 }

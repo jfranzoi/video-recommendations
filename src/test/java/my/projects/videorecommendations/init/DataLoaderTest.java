@@ -1,8 +1,11 @@
 package my.projects.videorecommendations.init;
 
 import my.projects.videorecommendations.data.MovieRepository;
+import my.projects.videorecommendations.data.UserRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import my.projects.videorecommendations.dummies.InMemoryMoviesRepository;
+import my.projects.videorecommendations.dummies.InMemoryUserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -13,34 +16,48 @@ import static org.hamcrest.Matchers.*;
 
 public class DataLoaderTest {
 
+    private MovieRepository movies;
+    private UserRepository users;
+
+    @BeforeEach
+    void setUp() {
+        movies = new InMemoryMoviesRepository();
+        users = new InMemoryUserRepository();
+    }
+
     @Test
     void movies_empty() throws Exception {
-        MovieRepository repository = new InMemoryMoviesRepository();
-        new DataLoader(repository, resourcesAt("data/empty")).process();
-
-        assertThat(repository.findAll(), empty());
+        new DataLoader(movies, users).process(resourcesAt("data/empty"));
+        assertThat(movies.findAll(), empty());
     }
 
     @Test
     void movies_full() throws Exception {
-        MovieRepository repository = new InMemoryMoviesRepository();
-        new DataLoader(repository, resourcesAt("data/full")).process();
-
-        assertThat(repository.findAll(), hasSize(10));
+        new DataLoader(movies, users).process(resourcesAt("data/full"));
+        assertThat(movies.findAll(), hasSize(10));
     }
 
     @Test
     void movies_mapping() throws Exception {
-        MovieRepository repository = new InMemoryMoviesRepository();
-        new DataLoader(repository, resourcesAt("data/full")).process();
-
-        // 1,Toy Story,Adventure|Animation|Children|Comedy|Fantasy
-        assertThat(repository.findAll(), hasItem(Movie.builder()
+        new DataLoader(movies, users).process(resourcesAt("data/full"));
+        assertThat(movies.findAll(), hasItem(Movie.builder()
                 .id("1")
                 .title("Toy Story")
                 .genres(Arrays.asList("Adventure", "Animation", "Children", "Comedy", "Fantasy"))
                 .build()
         ));
+    }
+
+    @Test
+    void users_empty() throws Exception {
+        new DataLoader(movies, users).process(resourcesAt("data/empty"));
+        assertThat(users.findAll(), empty());
+    }
+
+    @Test
+    void users_full() throws Exception {
+        new DataLoader(movies, users).process(resourcesAt("data/full"));
+        assertThat(users.findAll(), hasSize(3));
     }
 
     private Path resourcesAt(String location) throws Exception {
