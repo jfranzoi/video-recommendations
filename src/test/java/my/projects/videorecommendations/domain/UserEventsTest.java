@@ -3,6 +3,7 @@ package my.projects.videorecommendations.domain;
 import my.projects.videorecommendations.data.entities.MovieRatedEvent;
 import my.projects.videorecommendations.data.entities.MovieViewedEvent;
 import my.projects.videorecommendations.data.entities.UserRating;
+import my.projects.videorecommendations.data.entities.UserRating.Type;
 import my.projects.videorecommendations.dummies.InMemoryUserEventsRepository;
 import my.projects.videorecommendations.dummies.InMemoryUserRatingsRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +28,7 @@ public class UserEventsTest {
     void ratings_explicit() {
         new UserEvents(events, ratings).on(new MovieRatedEvent("1", "1", 5));
         assertThat(ratings.findAll(), contains(
-                new UserRating("1", "1", 5, "explicit")
+                new UserRating("1", "1", 5, Type.EXPLICIT)
         ));
     }
 
@@ -35,7 +36,7 @@ public class UserEventsTest {
     void ratings_implicit() {
         new UserEvents(events, ratings).on(new MovieViewedEvent("1", "1", 100));
         assertThat(ratings.findAll(), contains(
-                new UserRating("1", "1", 5, "implicit")
+                new UserRating("1", "1", 5, Type.IMPLICIT)
         ));
     }
 

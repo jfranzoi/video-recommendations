@@ -3,6 +3,7 @@ package my.projects.videorecommendations.domain;
 import my.projects.videorecommendations.data.entities.MovieRatedEvent;
 import my.projects.videorecommendations.data.entities.MovieViewedEvent;
 import my.projects.videorecommendations.data.entities.UserRating;
+import my.projects.videorecommendations.data.entities.UserRating.Type;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,7 +20,7 @@ public class RatingsTest {
     @Test
     void explicit() {
         Optional<UserRating> result = new Ratings().rate(new MovieRatedEvent(ANY, ANY, 5));
-        assertThat(result, is(Optional.of(new UserRating(ANY, ANY, 5, "explicit"))));
+        assertThat(result, is(Optional.of(new UserRating(ANY, ANY, 5, Type.EXPLICIT))));
     }
 
     @ParameterizedTest
@@ -40,6 +41,6 @@ public class RatingsTest {
     })
     void implicit_rated(int percentage, int expected) {
         Optional<UserRating> result = new Ratings().rate(new MovieViewedEvent(ANY, ANY, percentage));
-        assertThat(result, is(Optional.of(new UserRating(ANY, ANY, expected, "implicit"))));
+        assertThat(result, is(Optional.of(new UserRating(ANY, ANY, expected, Type.IMPLICIT))));
     }
 }

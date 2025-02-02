@@ -1,6 +1,7 @@
 package my.projects.videorecommendations.data;
 
 import my.projects.videorecommendations.data.entities.UserRating;
+import my.projects.videorecommendations.data.entities.UserRating.Type;
 import my.projects.videorecommendations.tests.PersistenceTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,22 +25,22 @@ public class UserRatingsRepositoryTest {
 
     @Test
     void saveMany_differentContext() {
-        repository.save(new UserRating("1", STAR_WARS, 3, "explicit"));
-        repository.save(new UserRating("1", TOY_STORY, 5, "explicit"));
+        repository.save(new UserRating("1", STAR_WARS, 3, Type.EXPLICIT));
+        repository.save(new UserRating("1", TOY_STORY, 5, Type.EXPLICIT));
 
         assertThat(repository.findAll(), contains(
-                new UserRating("1", STAR_WARS, 3, "explicit"),
-                new UserRating("1", TOY_STORY, 5, "explicit")
+                new UserRating("1", STAR_WARS, 3, Type.EXPLICIT),
+                new UserRating("1", TOY_STORY, 5, Type.EXPLICIT)
         ));
     }
 
     @Test
     void saveMany_sameContext_keepLast() {
-        repository.save(new UserRating("1", STAR_WARS, 3, "explicit"));
-        repository.save(new UserRating("1", STAR_WARS, 5, "explicit"));
+        repository.save(new UserRating("1", STAR_WARS, 3, Type.EXPLICIT));
+        repository.save(new UserRating("1", STAR_WARS, 5, Type.EXPLICIT));
 
         assertThat(repository.findAll(), contains(
-                new UserRating("1", STAR_WARS, 5, "explicit")
+                new UserRating("1", STAR_WARS, 5, Type.EXPLICIT)
         ));
     }
 }

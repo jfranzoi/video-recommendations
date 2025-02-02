@@ -1,12 +1,11 @@
 package my.projects.videorecommendations.data.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Arrays;
 
 @Entity
 @Table(name = "user_ratings")
@@ -20,12 +19,46 @@ public class UserRating {
     @Id
     private String movieId;
     private int rating;
-    private String type;
+
+    @Convert(converter = Type.Converter.class)
+    private Type type;
 
     @Data
     @NoArgsConstructor
     public static class Key {
         private String userId;
         private String movieId;
+    }
+
+    public enum Type {
+        NONE("X"),
+        EXPLICIT("E"),
+        IMPLICIT("I");
+
+        private final String code;
+
+        Type(String code) {
+            this.code = code;
+        }
+
+        static Type byCode(String text) {
+            return Arrays.stream(Type.values())
+                    .filter(x -> text.equals(x.code))
+                    .findFirst().orElse(Type.NONE);
+        }
+
+        static class Converter implements AttributeConverter<Type, String> {
+
+            @Override
+            public String convertToDatabaseColumn(Type type) {
+                return type.code;
+            }
+
+            @Override
+            public Type convertToEntityAttribute(String text) {
+                return Type.byCode(text);
+            }
+
+        }
     }
 }
