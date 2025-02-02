@@ -1,13 +1,13 @@
 package my.projects.videorecommendations.init;
 
-import my.projects.videorecommendations.data.EventsRepository;
+import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import my.projects.videorecommendations.data.entities.MovieRatedEvent;
 import my.projects.videorecommendations.data.entities.MovieViewedEvent;
 import my.projects.videorecommendations.data.entities.User;
-import my.projects.videorecommendations.dummies.InMemoryEventsRepository;
+import my.projects.videorecommendations.dummies.InMemoryUserEventsRepository;
 import my.projects.videorecommendations.dummies.InMemoryMoviesRepository;
 import my.projects.videorecommendations.dummies.InMemoryUsersRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,13 +23,13 @@ public class DataLoaderTest {
 
     private MoviesRepository movies;
     private UsersRepository users;
-    private EventsRepository events;
+    private UserEventsRepository events;
 
     @BeforeEach
     void setUp() {
         movies = new InMemoryMoviesRepository();
         users = new InMemoryUsersRepository();
-        events = new InMemoryEventsRepository();
+        events = new InMemoryUserEventsRepository();
     }
 
     @Test

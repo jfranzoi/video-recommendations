@@ -1,12 +1,12 @@
 package my.projects.videorecommendations.dummies;
 
-import my.projects.videorecommendations.data.EventsRepository;
+import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.entities.UserEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryEventsRepository implements EventsRepository {
+public class InMemoryUserEventsRepository implements UserEventsRepository {
     private ArrayList<UserEvent> events = new ArrayList<>();
 
     @Override

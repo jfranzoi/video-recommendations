@@ -1,6 +1,6 @@
 package my.projects.videorecommendations.config;
 
-import my.projects.videorecommendations.data.EventsRepository;
+import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.init.DataLoader;
 import my.projects.videorecommendations.data.MoviesRepository;
@@ -19,7 +19,7 @@ import java.nio.file.Path;
 public class ApplicationConfiguration {
 
     @Bean
-    public DataLoader dataLoader(MoviesRepository movies, UsersRepository users, EventsRepository events) {
+    public DataLoader dataLoader(MoviesRepository movies, UsersRepository users, UserEventsRepository events) {
         return new DataLoader(movies, users, events);
     }
 

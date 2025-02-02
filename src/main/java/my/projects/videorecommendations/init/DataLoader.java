@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import my.projects.videorecommendations.data.EventsRepository;
+import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.*;
@@ -23,10 +23,10 @@ public class DataLoader {
 
     private final MoviesRepository movies;
     private final UsersRepository users;
-    private final EventsRepository events;
+    private final UserEventsRepository events;
     private final CsvMapper mapper;
 
-    public DataLoader(MoviesRepository movies, UsersRepository users, EventsRepository events) {
+    public DataLoader(MoviesRepository movies, UsersRepository users, UserEventsRepository events) {
         this.movies = movies;
         this.users = users;
         this.events = events;

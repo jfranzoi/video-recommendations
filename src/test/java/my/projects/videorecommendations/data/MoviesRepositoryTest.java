@@ -1,10 +1,10 @@
-package my.projects.videorecommendations.data.jpa;
+package my.projects.videorecommendations.data;
 
-import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
@@ -16,6 +16,7 @@ import static org.hamcrest.Matchers.*;
         "application.data.folder=src/test/resources/data/empty"
 })
 @ActiveProfiles({"test"})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class MoviesRepositoryTest {
 
     @Autowired

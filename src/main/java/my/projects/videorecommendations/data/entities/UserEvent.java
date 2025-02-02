@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class UserEvent {
 
     @Data
-    static class Key {
+    public static class Key {
         private String userId;
         private String movieId;
     }

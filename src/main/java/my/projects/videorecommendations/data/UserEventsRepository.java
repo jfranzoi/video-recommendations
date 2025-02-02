@@ -5,7 +5,7 @@ import org.springframework.data.repository.Repository;
 
 import java.util.List;
 
-public interface EventsRepository extends Repository<UserEvent, String> {
+public interface UserEventsRepository extends Repository<UserEvent, UserEvent.Key> {
     List<UserEvent> findAll();
 
     void save(UserEvent item);
