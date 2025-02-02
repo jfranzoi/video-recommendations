@@ -9,19 +9,27 @@ import java.util.Optional;
 
 public class Ratings {
 
-    public Optional<UserRating> valueFor(UserEvent event) {
-        if (event instanceof MovieRatedEvent) return valueFor((MovieRatedEvent) event);
-        if (event instanceof MovieViewedEvent) return valueFor((MovieViewedEvent) event);
+    public Optional<UserRating> rate(UserEvent event) {
+        if (event instanceof MovieRatedEvent) return rate((MovieRatedEvent) event);
+        if (event instanceof MovieViewedEvent) return rate((MovieViewedEvent) event);
         return Optional.empty();
     }
 
-    private Optional<UserRating> valueFor(MovieRatedEvent event) {
-        return Optional.of(new UserRating(event.getUserId(), event.getMovieId(), event.getRating()));
+    private Optional<UserRating> rate(MovieRatedEvent event) {
+        return Optional.of(rateAs(event.getRating(), event));
     }
 
-    private Optional<UserRating> valueFor(MovieViewedEvent event) {
+    private Optional<UserRating> rate(MovieViewedEvent event) {
+        return rateStartingFrom(80, 5, event).or(() -> rateStartingFrom(60, 4, event));
+    }
+
+    private Optional<UserRating> rateStartingFrom(int threshold, int value, MovieViewedEvent event) {
         return Optional.of(event)
-                .filter(x -> event.getPercentage() > 0)
-                .map(x -> new UserRating(x.getUserId(), x.getMovieId(), 5));
+                .filter(x -> event.getPercentage() >= threshold)
+                .map(x -> rateAs(value, x));
+    }
+
+    private UserRating rateAs(int value, UserEvent event) {
+        return new UserRating(event.getUserId(), event.getMovieId(), value);
     }
 }

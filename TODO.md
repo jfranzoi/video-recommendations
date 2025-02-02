@@ -3,7 +3,7 @@
 * movies
   - (DONE) movies, list all
   - (DONE) movies, list by genre
-  - (TODO) movies, list by min (avg) rating
+  - (WIP) movies, list by min (avg) rating
   - (TODO) movies, list by max (avg) rating
   - (TODO) [NTH] movies, search by title, exact
   - (TODO) [NTH] movies, search by title, matching (at least one word)
