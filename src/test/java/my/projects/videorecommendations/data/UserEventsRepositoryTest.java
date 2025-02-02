@@ -6,15 +6,14 @@ import my.projects.videorecommendations.tests.PersistenceTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static my.projects.videorecommendations.data.TestData.STAR_WARS;
+import static my.projects.videorecommendations.data.TestData.TOY_STORY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 
 @PersistenceTest
 public class UserEventsRepositoryTest {
-
-    private static final String STAR_WARS = "1";
-    private static final String TOY_STORY = "2";
 
     @Autowired
     private UserEventsRepository repository;
@@ -36,7 +35,7 @@ public class UserEventsRepositoryTest {
     }
 
     @Test
-    void saveMany_sameContext() {
+    void saveMany_sameContext_appended() {
         repository.save(new MovieViewedEvent("1", STAR_WARS, 20));
         repository.save(new MovieRatedEvent("1", STAR_WARS, 3));
 

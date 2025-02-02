@@ -1,9 +1,10 @@
 package my.projects.videorecommendations.config;
 
+import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.UserEventsRepository;
+import my.projects.videorecommendations.data.UserRatingsRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.init.DataLoader;
-import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.init.InitActions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +20,8 @@ import java.nio.file.Path;
 public class ApplicationConfiguration {
 
     @Bean
-    public DataLoader dataLoader(MoviesRepository movies, UsersRepository users, UserEventsRepository events) {
-        return new DataLoader(movies, users, events);
+    public DataLoader dataLoader(MoviesRepository movies, UsersRepository users, UserEventsRepository events, UserRatingsRepository ratings) {
+        return new DataLoader(movies, users, events, ratings);
     }
 
     @Bean

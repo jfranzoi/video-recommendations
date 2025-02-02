@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.UserEventsRepository;
+import my.projects.videorecommendations.data.UserRatingsRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.*;
 import my.projects.videorecommendations.domain.UserEvents;
@@ -25,12 +26,14 @@ public class DataLoader {
     private final MoviesRepository moviesRepository;
     private final UsersRepository usersRepository;
     private final UserEventsRepository userEventsRepository;
+    private final UserRatingsRepository userRatingsRepository;
     private final CsvMapper mapper;
 
-    public DataLoader(MoviesRepository moviesRepository, UsersRepository usersRepository, UserEventsRepository userEventsRepository) {
+    public DataLoader(MoviesRepository moviesRepository, UsersRepository usersRepository, UserEventsRepository userEventsRepository, UserRatingsRepository userRatingsRepository) {
         this.moviesRepository = moviesRepository;
         this.usersRepository = usersRepository;
         this.userEventsRepository = userEventsRepository;
+        this.userRatingsRepository = userRatingsRepository;
         this.mapper = new CsvMapper();
     }
 
@@ -40,7 +43,7 @@ public class DataLoader {
         process(data.resolve("movies.csv"), MovieRow.class, x -> moviesRepository.save(toMovie(x)));
         process(data.resolve("users.csv"), UserRow.class, x -> usersRepository.save(toUser(x)));
         process(data.resolve("ratings.csv"), RatingRow.class, x ->
-                new UserEvents(userEventsRepository).on(toEvent(x))
+                new UserEvents(userEventsRepository, userRatingsRepository).on(toEvent(x))
         );
     }
 

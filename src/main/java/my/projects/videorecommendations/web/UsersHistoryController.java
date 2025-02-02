@@ -1,6 +1,7 @@
 package my.projects.videorecommendations.web;
 
 import my.projects.videorecommendations.data.UserEventsRepository;
+import my.projects.videorecommendations.data.UserRatingsRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.User;
 import my.projects.videorecommendations.data.entities.UserEvent;
@@ -29,6 +30,9 @@ public class UsersHistoryController {
     @Autowired
     private UserEventsRepository userEventsRepository;
 
+    @Autowired
+    private UserRatingsRepository userRatingsRepository;
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> byId(@PathVariable String id, UserHistoryFilter filter) {
         return new Users(usersRepository).by(id)
@@ -37,7 +41,7 @@ public class UsersHistoryController {
     }
 
     private UserHistoryDetails toHistoryDetails(User user, UserHistoryFilter filter) {
-        List<UserEvent> events = new UserEvents(userEventsRepository).historyBy(user, filter);
+        List<UserEvent> events = new UserEvents(userEventsRepository, userRatingsRepository).historyBy(user, filter);
         return new UserHistoryDetails(
                 toUserReference(user),
                 events.stream().map(x -> toUserEventReference(x)).toList()

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_events")
 @Data
 @NoArgsConstructor
-public class UserEvent {
+public abstract class UserEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
