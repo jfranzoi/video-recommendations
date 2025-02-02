@@ -1,4 +1,4 @@
-package my.projects.videorecommendations;
+package my.projects.videorecommendations.tests;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,12 +8,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles({"test"})
-@DirtiesContext
+@ComponentTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
+        "application.data.folder=src/test/resources/data/full"
+})
 public abstract class BaseAcceptanceTest {
 
     @LocalServerPort

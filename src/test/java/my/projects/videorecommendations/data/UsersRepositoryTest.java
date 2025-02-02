@@ -1,21 +1,15 @@
 package my.projects.videorecommendations.data;
 
 import my.projects.videorecommendations.data.entities.User;
+import my.projects.videorecommendations.tests.PersistenceTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 
-@SpringBootTest(properties = {
-        "application.data.folder=src/test/resources/data/empty"
-})
-@ActiveProfiles({"test"})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@PersistenceTest
 public class UsersRepositoryTest {
 
     @Autowired
