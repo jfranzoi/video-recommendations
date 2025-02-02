@@ -25,6 +25,17 @@ public class UserEventsRepositoryTest {
     }
 
     @Test
+    void findByUser() {
+        repository.save(new MovieViewedEvent("1", STAR_WARS, 99));
+        repository.save(new MovieRatedEvent("1", TOY_STORY, 5));
+        repository.save(new MovieRatedEvent("2", TOY_STORY, 3));
+
+        assertThat(repository.findByUserId("2"), contains(
+                new MovieRatedEvent("2", TOY_STORY, 3)
+        ));
+    }
+
+    @Test
     void saveMany_differentContext() {
         repository.save(new MovieViewedEvent("1", STAR_WARS, 99));
         repository.save(new MovieRatedEvent("1", TOY_STORY, 5));

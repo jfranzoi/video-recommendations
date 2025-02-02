@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/movies")
@@ -32,7 +31,7 @@ public class MoviesController {
     private List<MovieReference> toReferences(List<Movie> movies) {
         return movies.stream()
                 .map(x -> toReference(x))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private MovieReference toReference(Movie movie) {
