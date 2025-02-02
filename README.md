@@ -38,7 +38,7 @@ Same can be achieved in a more **production-ready** mode, by executing:
 ./build-and-start.sh
 ```
 
-Optionally, tests can be skipped, by executing:
+It would take some more time, downloading all required dependencies within docker containers. Optionally, tests can be skipped, by executing:
 
 ```shell
 MAVEN_ARGS="-DskipTests" ./build-and-start.sh

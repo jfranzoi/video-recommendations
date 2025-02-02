@@ -6,7 +6,7 @@ import my.projects.videorecommendations.data.entities.UserEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryUserEventsRepository implements UserEventsRepository {
+public class InMemoryUserEventsRepository extends EmptySpecificationRepository<UserEvent> implements UserEventsRepository {
     private ArrayList<UserEvent> events = new ArrayList<>();
 
     @Override

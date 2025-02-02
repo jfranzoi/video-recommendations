@@ -26,6 +26,30 @@ public class UsersAcceptanceTest extends BaseAcceptanceTest {
     }
 
     @Test
+    void listRatingsOnly() {
+        ResponseEntity<String> result = get("/users/2?type=rated", new HttpHeaders() {{
+            add("Accept", "application/json");
+        }});
+
+        assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody(), hasJsonPath("$.user.name", is("Bob")));
+        assertThat(result.getBody(), hasJsonPath("$.events[*].type", contains("rated")));
+        assertThat(result.getBody(), hasJsonPath("$.events[*].movie", contains("3")));
+    }
+
+    @Test
+    void listViewsOnly() {
+        ResponseEntity<String> result = get("/users/2?type=viewed", new HttpHeaders() {{
+            add("Accept", "application/json");
+        }});
+
+        assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody(), hasJsonPath("$.user.name", is("Bob")));
+        assertThat(result.getBody(), hasJsonPath("$.events[*].type", contains("viewed")));
+        assertThat(result.getBody(), hasJsonPath("$.events[*].movie", contains("1")));
+    }
+
+    @Test
     void userNotFound() {
         ResponseEntity<String> result = get("/users/99", new HttpHeaders() {{
             add("Accept", "application/json");

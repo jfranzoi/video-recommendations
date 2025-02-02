@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserHistory {
+public class UserHistoryDetails {
     private UserReference user;
     private List<UserEventReference> events;
 }

@@ -4,8 +4,10 @@ import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.User;
 import my.projects.videorecommendations.data.entities.UserEvent;
+import my.projects.videorecommendations.domain.UserHistory;
 import my.projects.videorecommendations.web.entities.UserEventReference;
-import my.projects.videorecommendations.web.entities.UserHistory;
+import my.projects.videorecommendations.web.entities.UserHistoryDetails;
+import my.projects.videorecommendations.web.entities.UserHistoryFilter;
 import my.projects.videorecommendations.web.entities.UserReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UsersController {
+public class UsersHistoryController {
 
     @Autowired
     private UsersRepository usersRepository;
@@ -27,15 +29,15 @@ public class UsersController {
     private UserEventsRepository userEventsRepository;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> byId(@PathVariable String id) {
+    public ResponseEntity<?> byId(@PathVariable String id, UserHistoryFilter filter) {
         return usersRepository.findBy(id)
-                .map(x -> ResponseEntity.ok().body(toHistory(x)))
+                .map(x -> ResponseEntity.ok().body(toHistoryDetails(x, filter)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    private UserHistory toHistory(User user) {
-        List<UserEvent> events = userEventsRepository.findByUserId(user.getId());
-        return new UserHistory(
+    private UserHistoryDetails toHistoryDetails(User user, UserHistoryFilter filter) {
+        List<UserEvent> events = new UserHistory(userEventsRepository).by(user, filter);
+        return new UserHistoryDetails(
                 toUserReference(user),
                 events.stream().map(x -> toUserEventReference(x)).toList()
         );
@@ -47,15 +49,9 @@ public class UsersController {
 
     private UserEventReference toUserEventReference(UserEvent event) {
         return new UserEventReference(
-                toEventType(event),
+                event.getType(),
                 event.getMovieId()
         );
     }
 
-    private String toEventType(UserEvent event) {
-        return event.getClass().getSimpleName()
-                .replace("Movie", "")
-                .replace("Event", "")
-                .toLowerCase();
-    }
 }

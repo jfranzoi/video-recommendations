@@ -11,9 +11,10 @@
 
 * users interactions (history)
   - (DONE) user events, list all
-  - (TODO) user events, list ratings only
-  - (TODO) user events, list views only
+  - (DONE) user events, list ratings only
+  - (DONE) user events, list views only
 
+* user interactions (ingestion)
   - (TODO) user events, on movie rated
   - (TODO) user events, on movie viewed
   - (TODO) user events, on any: recommendations adjusted
