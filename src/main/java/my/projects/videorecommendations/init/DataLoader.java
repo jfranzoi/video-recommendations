@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.MoviesRepository;
+import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.*;
 
@@ -68,10 +68,7 @@ public class DataLoader {
     }
 
     private User toUser(UserRow row) {
-        return User.builder()
-                .id(row.user_id)
-                .name(row.username)
-                .build();
+        return new User(row.user_id, row.username);
     }
 
     private UserEvent toEvent(RatingRow row) {
