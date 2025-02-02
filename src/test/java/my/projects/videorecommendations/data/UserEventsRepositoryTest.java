@@ -21,18 +21,7 @@ public class UserEventsRepositoryTest {
 
     @Test
     void none() {
-        assertThat(repository.findAll(), empty());
-    }
-
-    @Test
-    void findByUser() {
-        repository.save(new MovieViewedEvent("1", STAR_WARS, 99));
-        repository.save(new MovieRatedEvent("1", TOY_STORY, 5));
-        repository.save(new MovieRatedEvent("2", TOY_STORY, 3));
-
-        assertThat(repository.findByUserId("2"), contains(
-                new MovieRatedEvent("2", TOY_STORY, 3)
-        ));
+        assertThat(repository.findAll(null), empty());
     }
 
     @Test
@@ -40,7 +29,7 @@ public class UserEventsRepositoryTest {
         repository.save(new MovieViewedEvent("1", STAR_WARS, 99));
         repository.save(new MovieRatedEvent("1", TOY_STORY, 5));
 
-        assertThat(repository.findAll(), contains(
+        assertThat(repository.findAll(null), contains(
                 new MovieViewedEvent("1", STAR_WARS, 99),
                 new MovieRatedEvent("1", TOY_STORY, 5)
         ));
@@ -51,7 +40,7 @@ public class UserEventsRepositoryTest {
         repository.save(new MovieViewedEvent("1", STAR_WARS, 20));
         repository.save(new MovieRatedEvent("1", STAR_WARS, 3));
 
-        assertThat(repository.findAll(), contains(
+        assertThat(repository.findAll(null), contains(
                 new MovieViewedEvent("1", STAR_WARS, 20),
                 new MovieRatedEvent("1", STAR_WARS, 3)
         ));

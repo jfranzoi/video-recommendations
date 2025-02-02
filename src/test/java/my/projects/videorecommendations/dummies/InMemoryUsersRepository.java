@@ -10,16 +10,15 @@ import java.util.Optional;
 public class InMemoryUsersRepository implements UsersRepository {
     private ArrayList<User> users = new ArrayList<>();
 
-    @Override
-    public Optional<User> findBy(String id) {
-        return users.stream()
-                .filter(x -> id.equals(x.getId()))
-                .findFirst();
+    public List<User> all() {
+        return users;
     }
 
     @Override
-    public List<User> findAll() {
-        return users;
+    public Optional<User> findById(String id) {
+        return users.stream()
+                .filter(x -> id.equals(x.getId()))
+                .findFirst();
     }
 
     @Override

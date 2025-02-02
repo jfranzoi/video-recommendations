@@ -1,8 +1,5 @@
 package my.projects.videorecommendations.init;
 
-import my.projects.videorecommendations.data.UserEventsRepository;
-import my.projects.videorecommendations.data.MoviesRepository;
-import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import my.projects.videorecommendations.data.entities.MovieRatedEvent;
 import my.projects.videorecommendations.data.entities.MovieViewedEvent;
@@ -21,9 +18,9 @@ import static org.hamcrest.Matchers.*;
 
 public class DataLoaderTest {
 
-    private MoviesRepository movies;
-    private UsersRepository users;
-    private UserEventsRepository events;
+    private InMemoryMoviesRepository movies;
+    private InMemoryUsersRepository users;
+    private InMemoryUserEventsRepository events;
 
     @BeforeEach
     void setUp() {
@@ -57,37 +54,37 @@ public class DataLoaderTest {
     @Test
     void users_empty() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/empty"));
-        assertThat(users.findAll(), empty());
+        assertThat(users.all(), empty());
     }
 
     @Test
     void users_full() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/full"));
-        assertThat(users.findAll(), hasSize(3));
+        assertThat(users.all(), hasSize(3));
     }
 
     @Test
     void users_mapping() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/full"));
-        assertThat(users.findAll(), hasItem(new User("1", "Alice")));
+        assertThat(users.all(), hasItem(new User("1", "Alice")));
     }
 
     @Test
     void events_empty() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/empty"));
-        assertThat(events.findAll(), empty());
+        assertThat(events.findAll(null), empty());
     }
 
     @Test
     void events_full() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/full"));
-        assertThat(events.findAll(), hasSize(6));
+        assertThat(events.findAll(null), hasSize(6));
     }
 
     @Test
     void events_mapping() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/full"));
-        assertThat(events.findAll(), hasItems(
+        assertThat(events.findAll(null), hasItems(
                 new MovieRatedEvent("1", "1", 4),
                 new MovieRatedEvent("1", "2", 5),
                 new MovieViewedEvent("1", "2", 90)

@@ -10,13 +10,6 @@ public class InMemoryUserEventsRepository extends EmptySpecificationRepository<U
     private ArrayList<UserEvent> events = new ArrayList<>();
 
     @Override
-    public List<UserEvent> findByUserId(String userId) {
-        return events.stream()
-                .filter(x -> userId.equals(x.getUserId()))
-                .toList();
-    }
-
-    @Override
     public List<UserEvent> findAll() {
         return events;
     }

@@ -30,7 +30,7 @@ public class UsersHistoryController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> byId(@PathVariable String id, UserHistoryFilter filter) {
-        return usersRepository.findBy(id)
+        return usersRepository.findById(id)
                 .map(x -> ResponseEntity.ok().body(toHistoryDetails(x, filter)))
                 .orElse(ResponseEntity.notFound().build());
     }
