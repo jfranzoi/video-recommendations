@@ -23,18 +23,13 @@ public class MoviesController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> all(MovieFilter filter) {
+        List<Movie> results = new Movies(repository).all(filter);
         return ResponseEntity.ok(new MovieResults(
-                toReferences(new Movies(repository).all(filter))
+                results.stream().map(x -> toMovieReference(x)).toList()
         ));
     }
 
-    private List<MovieReference> toReferences(List<Movie> movies) {
-        return movies.stream()
-                .map(x -> toReference(x))
-                .toList();
-    }
-
-    private MovieReference toReference(Movie movie) {
+    private MovieReference toMovieReference(Movie movie) {
         return new MovieReference(movie.getId(), movie.getTitle());
     }
 }

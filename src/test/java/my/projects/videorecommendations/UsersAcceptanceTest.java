@@ -1,7 +1,6 @@
 package my.projects.videorecommendations;
 
 import my.projects.videorecommendations.tests.BaseAcceptanceTest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,6 @@ import static org.hamcrest.Matchers.is;
 public class UsersAcceptanceTest extends BaseAcceptanceTest {
 
     @Test
-    @Disabled("WIP")
     void listAllHistory() {
         ResponseEntity<String> result = get("/users/1", new HttpHeaders() {{
             add("Accept", "application/json");
@@ -23,7 +21,8 @@ public class UsersAcceptanceTest extends BaseAcceptanceTest {
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.user.name", is("Alice")));
-        assertThat(result.getBody(), hasJsonPath("$.events[*].type", contains("rated", "viewed")));
+        assertThat(result.getBody(), hasJsonPath("$.events[*].type", contains("rated", "rated")));
+        assertThat(result.getBody(), hasJsonPath("$.events[*].movie", contains("1", "2")));
     }
 
     @Test

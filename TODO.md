@@ -10,7 +10,7 @@
   - (TODO) [NTH] movies, search by genres, matching (at least one)
 
 * users interactions (history)
-  - (WIP) user events, list all
+  - (DONE) user events, list all
   - (TODO) user events, list ratings only
   - (TODO) user events, list views only
 
