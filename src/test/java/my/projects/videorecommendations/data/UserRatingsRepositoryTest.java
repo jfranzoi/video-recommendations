@@ -24,22 +24,22 @@ public class UserRatingsRepositoryTest {
 
     @Test
     void saveMany_differentContext() {
-        repository.save(new UserRating("1", STAR_WARS, 3));
-        repository.save(new UserRating("1", TOY_STORY, 5));
+        repository.save(new UserRating("1", STAR_WARS, 3, "explicit"));
+        repository.save(new UserRating("1", TOY_STORY, 5, "explicit"));
 
         assertThat(repository.findAll(), contains(
-                new UserRating("1", STAR_WARS, 3),
-                new UserRating("1", TOY_STORY, 5)
+                new UserRating("1", STAR_WARS, 3, "explicit"),
+                new UserRating("1", TOY_STORY, 5, "explicit")
         ));
     }
 
     @Test
     void saveMany_sameContext_keepLast() {
-        repository.save(new UserRating("1", STAR_WARS, 3));
-        repository.save(new UserRating("1", STAR_WARS, 5));
+        repository.save(new UserRating("1", STAR_WARS, 3, "explicit"));
+        repository.save(new UserRating("1", STAR_WARS, 5, "explicit"));
 
         assertThat(repository.findAll(), contains(
-                new UserRating("1", STAR_WARS, 5)
+                new UserRating("1", STAR_WARS, 5, "explicit")
         ));
     }
 }

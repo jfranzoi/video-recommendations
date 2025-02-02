@@ -27,7 +27,7 @@ public class UserEventsTest {
     void ratings_explicit() {
         new UserEvents(events, ratings).on(new MovieRatedEvent("1", "1", 5));
         assertThat(ratings.findAll(), contains(
-                new UserRating("1", "1", 5)
+                new UserRating("1", "1", 5, "explicit")
         ));
     }
 
@@ -35,7 +35,7 @@ public class UserEventsTest {
     void ratings_implicit() {
         new UserEvents(events, ratings).on(new MovieViewedEvent("1", "1", 100));
         assertThat(ratings.findAll(), contains(
-                new UserRating("1", "1", 5)
+                new UserRating("1", "1", 5, "implicit")
         ));
     }
 

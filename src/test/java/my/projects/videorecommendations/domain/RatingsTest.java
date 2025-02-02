@@ -19,7 +19,7 @@ public class RatingsTest {
     @Test
     void explicit() {
         Optional<UserRating> result = new Ratings().rate(new MovieRatedEvent(ANY, ANY, 5));
-        assertThat(result.map(x -> x.getRating()), is(Optional.of(5)));
+        assertThat(result, is(Optional.of(new UserRating(ANY, ANY, 5, "explicit"))));
     }
 
     @ParameterizedTest
@@ -40,6 +40,6 @@ public class RatingsTest {
     })
     void implicit_rated(int percentage, int expected) {
         Optional<UserRating> result = new Ratings().rate(new MovieViewedEvent(ANY, ANY, percentage));
-        assertThat(result.map(x -> x.getRating()), is(Optional.of(expected)));
+        assertThat(result, is(Optional.of(new UserRating(ANY, ANY, expected, "implicit"))));
     }
 }

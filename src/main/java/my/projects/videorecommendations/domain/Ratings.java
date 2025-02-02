@@ -16,7 +16,7 @@ public class Ratings {
     }
 
     private Optional<UserRating> rate(MovieRatedEvent event) {
-        return Optional.of(rateAs(event.getRating(), event));
+        return Optional.of(rateAs(event.getRating(), event, "explicit"));
     }
 
     private Optional<UserRating> rate(MovieViewedEvent event) {
@@ -26,10 +26,13 @@ public class Ratings {
     private Optional<UserRating> rateStartingFrom(int threshold, int value, MovieViewedEvent event) {
         return Optional.of(event)
                 .filter(x -> event.getPercentage() >= threshold)
-                .map(x -> rateAs(value, x));
+                .map(x -> rateAs(value, x, "implicit"));
     }
 
-    private UserRating rateAs(int value, UserEvent event) {
-        return new UserRating(event.getUserId(), event.getMovieId(), value);
+    private UserRating rateAs(int value, UserEvent event, String type) {
+        return new UserRating(
+                event.getUserId(), event.getMovieId(),
+                value, type
+        );
     }
 }

@@ -20,6 +20,7 @@ public class UserRating {
     @Id
     private String movieId;
     private int rating;
+    private String type;
 
     @Data
     @NoArgsConstructor
