@@ -23,7 +23,7 @@ public class MoviesRepositoryTest {
 
     @Test
     void none() {
-        assertThat(repository.findAll(), empty());
+        assertThat(repository.findAll(null), empty());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class MoviesRepositoryTest {
                 .build()
         );
 
-        assertThat(repository.findAll(), contains(allOf(
+        assertThat(repository.findAll(null), contains(allOf(
                 hasProperty("id", is("99")),
                 hasProperty("title", is("Love Boat")),
                 hasProperty("genres", contains("Comedy", "Romance"))

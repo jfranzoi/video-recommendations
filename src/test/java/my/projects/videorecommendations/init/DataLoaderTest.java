@@ -28,19 +28,19 @@ public class DataLoaderTest {
     @Test
     void movies_empty() throws Exception {
         new DataLoader(movies, users).process(resourcesAt("data/empty"));
-        assertThat(movies.findAll(), empty());
+        assertThat(movies.findAll(null), empty());
     }
 
     @Test
     void movies_full() throws Exception {
         new DataLoader(movies, users).process(resourcesAt("data/full"));
-        assertThat(movies.findAll(), hasSize(10));
+        assertThat(movies.findAll(null), hasSize(10));
     }
 
     @Test
     void movies_mapping() throws Exception {
         new DataLoader(movies, users).process(resourcesAt("data/full"));
-        assertThat(movies.findAll(), hasItem(Movie.builder()
+        assertThat(movies.findAll(null), hasItem(Movie.builder()
                 .id("1")
                 .title("Toy Story")
                 .genres(Arrays.asList("Adventure", "Animation", "Children", "Comedy", "Fantasy"))
