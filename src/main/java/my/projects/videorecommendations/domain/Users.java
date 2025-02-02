@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Slf4j
 public class Users {
+
     private final UsersRepository usersRepository;
     private final UserEventsRepository userEventsRepository;
 
@@ -33,6 +34,11 @@ public class Users {
         );
     }
 
+    public void on(UserEvent event) {
+        log.info("Processing user event: [{}]", event);
+        userEventsRepository.save(event);
+    }
+
     private Specification<User> userById(String id) {
         return (root, query, cb) -> cb.equal(root.get("id"), id);
     }
@@ -47,7 +53,7 @@ public class Users {
                 .orElse(null);
     }
 
-    private Specification<UserEvent> eventsByFilter(String value) {
-        return (root, query, cb) -> cb.equal(root.get("type"), value);
+    private Specification<UserEvent> eventsByFilter(String type) {
+        return (root, query, cb) -> cb.equal(root.get("type"), type);
     }
 }

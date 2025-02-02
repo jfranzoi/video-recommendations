@@ -8,6 +8,7 @@ import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.*;
+import my.projects.videorecommendations.domain.Users;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -21,23 +22,26 @@ import java.util.regex.Pattern;
 public class DataLoader {
     private static final String COLLECTION_SEPARATOR = Pattern.quote("|");
 
-    private final MoviesRepository movies;
-    private final UsersRepository users;
-    private final UserEventsRepository events;
+    private final MoviesRepository moviesRepository;
+    private final UsersRepository usersRepository;
+    private final UserEventsRepository userEventsRepository;
     private final CsvMapper mapper;
 
-    public DataLoader(MoviesRepository movies, UsersRepository users, UserEventsRepository events) {
-        this.movies = movies;
-        this.users = users;
-        this.events = events;
+    public DataLoader(MoviesRepository moviesRepository, UsersRepository usersRepository, UserEventsRepository userEventsRepository) {
+        this.moviesRepository = moviesRepository;
+        this.usersRepository = usersRepository;
+        this.userEventsRepository = userEventsRepository;
         this.mapper = new CsvMapper();
     }
 
     public void process(Path data) {
         log.info("Processing data at {}", data);
-        process(data.resolve("movies.csv"), MovieRow.class, x -> movies.save(toMovie(x)));
-        process(data.resolve("users.csv"), UserRow.class, x -> users.save(toUser(x)));
-        process(data.resolve("ratings.csv"), RatingRow.class, x -> events.save(toEvent(x)));
+
+        process(data.resolve("movies.csv"), MovieRow.class, x -> moviesRepository.save(toMovie(x)));
+        process(data.resolve("users.csv"), UserRow.class, x -> usersRepository.save(toUser(x)));
+        process(data.resolve("ratings.csv"), RatingRow.class, x ->
+                new Users(usersRepository, userEventsRepository).on(toEvent(x))
+        );
     }
 
     private <T> void process(Path source, Class<T> type, Consumer<T> action) {
