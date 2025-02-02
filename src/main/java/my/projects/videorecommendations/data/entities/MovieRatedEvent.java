@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class MovieRatedEvent extends UserEvent {
-    private int rate;
+    private int rating;
 
-    public MovieRatedEvent(String userId, String movieId, int rate) {
+    public MovieRatedEvent(String userId, String movieId, int rating) {
         super(userId, movieId);
-        this.rate = rate;
+        this.rating = rating;
     }
 }

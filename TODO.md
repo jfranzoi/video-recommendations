@@ -39,4 +39,4 @@
 - ratings, implicit: 4 for view percentage in (60..80), 5 for view percentage in (80..100)
 - ratings, priority: explicit if available, implicit otherwise
 - user preferred genres: genres of any rated movie
-- user preferred highly rated: rate in (4, 5)
+- user preferred highly rated: rating in (4, 5)

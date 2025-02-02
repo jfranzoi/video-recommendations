@@ -64,11 +64,7 @@ public class DataLoader {
     }
 
     private Movie toMovie(MovieRow row) {
-        return new Movie(
-                row.movie_id,
-                row.title,
-                toCollection(row.genres)
-        );
+        return new Movie(row.movie_id, row.title, toCollection(row.genres));
     }
 
     private User toUser(UserRow row) {
