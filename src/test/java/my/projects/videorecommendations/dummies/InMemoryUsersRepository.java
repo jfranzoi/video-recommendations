@@ -5,20 +5,13 @@ import my.projects.videorecommendations.data.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class InMemoryUsersRepository implements UsersRepository {
+public class InMemoryUsersRepository extends EmptySpecificationRepository<User> implements UsersRepository {
     private ArrayList<User> users = new ArrayList<>();
 
-    public List<User> all() {
-        return users;
-    }
-
     @Override
-    public Optional<User> findById(String id) {
-        return users.stream()
-                .filter(x -> id.equals(x.getId()))
-                .findFirst();
+    public List<User> findAll() {
+        return users;
     }
 
     @Override

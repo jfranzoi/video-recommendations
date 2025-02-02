@@ -4,7 +4,7 @@ import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.User;
 import my.projects.videorecommendations.data.entities.UserEvent;
-import my.projects.videorecommendations.domain.UserHistory;
+import my.projects.videorecommendations.domain.Users;
 import my.projects.videorecommendations.web.entities.UserEventReference;
 import my.projects.videorecommendations.web.entities.UserHistoryDetails;
 import my.projects.videorecommendations.web.entities.UserHistoryFilter;
@@ -30,13 +30,13 @@ public class UsersHistoryController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> byId(@PathVariable String id, UserHistoryFilter filter) {
-        return usersRepository.findById(id)
+        return new Users(usersRepository, userEventsRepository).by(id)
                 .map(x -> ResponseEntity.ok().body(toHistoryDetails(x, filter)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     private UserHistoryDetails toHistoryDetails(User user, UserHistoryFilter filter) {
-        List<UserEvent> events = new UserHistory(userEventsRepository).by(user, filter);
+        List<UserEvent> events = new Users(usersRepository, userEventsRepository).historyBy(user, filter);
         return new UserHistoryDetails(
                 toUserReference(user),
                 events.stream().map(x -> toUserEventReference(x)).toList()

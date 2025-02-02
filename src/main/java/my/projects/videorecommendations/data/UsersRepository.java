@@ -1,12 +1,9 @@
 package my.projects.videorecommendations.data;
 
 import my.projects.videorecommendations.data.entities.User;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.Repository;
 
-import java.util.Optional;
-
-public interface UsersRepository extends Repository<User, String> {
-    Optional<User> findById(String id);
-
+public interface UsersRepository extends Repository<User, String>, JpaSpecificationExecutor<User> {
     void save(User user);
 }

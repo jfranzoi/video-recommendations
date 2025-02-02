@@ -54,19 +54,19 @@ public class DataLoaderTest {
     @Test
     void users_empty() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/empty"));
-        assertThat(users.all(), empty());
+        assertThat(users.findAll(), empty());
     }
 
     @Test
     void users_full() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/full"));
-        assertThat(users.all(), hasSize(3));
+        assertThat(users.findAll(), hasSize(3));
     }
 
     @Test
     void users_mapping() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/full"));
-        assertThat(users.all(), hasItem(new User("1", "Alice")));
+        assertThat(users.findAll(), hasItem(new User("1", "Alice")));
     }
 
     @Test
