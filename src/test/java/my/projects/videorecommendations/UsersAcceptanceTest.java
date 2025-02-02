@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -21,6 +22,7 @@ public class UsersAcceptanceTest extends BaseAcceptanceTest {
         }});
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody(), hasJsonPath("$.user.name", is("Alice")));
     }
 
     @Test

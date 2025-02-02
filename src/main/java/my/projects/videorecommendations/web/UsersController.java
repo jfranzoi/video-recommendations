@@ -1,6 +1,9 @@
 package my.projects.videorecommendations.web;
 
 import my.projects.videorecommendations.data.UsersRepository;
+import my.projects.videorecommendations.data.entities.User;
+import my.projects.videorecommendations.web.entities.UserHistory;
+import my.projects.videorecommendations.web.entities.UserReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +21,16 @@ public class UsersController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> byId(@PathVariable String id) {
         return repository.findBy(id)
-                .map(x -> ResponseEntity.ok().build())
+                .map(x -> ResponseEntity.ok().body(toHistory(x)))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    private UserHistory toHistory(User user) {
+        return UserHistory.builder()
+                .user(UserReference.builder()
+                        .id(user.getId())
+                        .name(user.getName())
+                        .build())
+                .build();
     }
 }
