@@ -8,6 +8,7 @@ Sample API for solving the "Video Recommendations" coding problem.
 * maven, via maven wrapper, to be portable
 * docker and docker compose, for packaging and deploying
 * Spring Boot 3.4.x, as application framework
+* Lombok, for boilerplate code generation
 * PostgresSQL 17.x, as database
 
 Only hard requirement is on JDK version. In order to support a portable setup, a local [.sdkmanrc](./.sdkmanrc) file is provided, 
