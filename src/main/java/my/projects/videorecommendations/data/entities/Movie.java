@@ -8,13 +8,14 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
+@Table(name = "movies")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "movies")
 public class Movie {
     @Id
     private String id;
+
     private String title;
 
     @ElementCollection(fetch = FetchType.EAGER)

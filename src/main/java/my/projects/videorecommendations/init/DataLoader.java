@@ -76,7 +76,7 @@ public class DataLoader {
     }
 
     private UserEvent toEvent(RatingRow row) {
-        return new UserEvent(row.user_id + "_" + row.movie_id);
+        return new UserEvent(row.user_id, row.movie_id);
     }
 
     private List<String> toCollection(String value) {
