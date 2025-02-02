@@ -7,14 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import my.projects.videorecommendations.data.EventsRepository;
 import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.UsersRepository;
-import my.projects.videorecommendations.data.entities.Movie;
-import my.projects.videorecommendations.data.entities.User;
-import my.projects.videorecommendations.data.entities.UserEvent;
+import my.projects.videorecommendations.data.entities.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
@@ -76,7 +75,17 @@ public class DataLoader {
     }
 
     private UserEvent toEvent(RatingRow row) {
-        return new UserEvent(row.user_id, row.movie_id);
+        return Optional.ofNullable(row.rating)
+                .map(x -> toMovieRated(row))
+                .orElseGet(() -> toMovieViewed(row));
+    }
+
+    private UserEvent toMovieRated(RatingRow row) {
+        return new MovieRatedEvent(row.user_id, row.movie_id, row.rating);
+    }
+
+    private MovieViewedEvent toMovieViewed(RatingRow row) {
+        return new MovieViewedEvent(row.user_id, row.movie_id, row.view_percentage);
     }
 
     private List<String> toCollection(String value) {

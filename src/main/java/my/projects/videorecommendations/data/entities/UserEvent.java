@@ -1,14 +1,12 @@
 package my.projects.videorecommendations.data.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "user_events")
 @IdClass(UserEvent.Key.class)
 @Data

@@ -4,6 +4,9 @@ import my.projects.videorecommendations.data.EventsRepository;
 import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.Movie;
+import my.projects.videorecommendations.data.entities.MovieRatedEvent;
+import my.projects.videorecommendations.data.entities.MovieViewedEvent;
+import my.projects.videorecommendations.data.entities.User;
 import my.projects.videorecommendations.dummies.InMemoryEventsRepository;
 import my.projects.videorecommendations.dummies.InMemoryMoviesRepository;
 import my.projects.videorecommendations.dummies.InMemoryUsersRepository;
@@ -64,6 +67,12 @@ public class DataLoaderTest {
     }
 
     @Test
+    void users_mapping() throws Exception {
+        new DataLoader(movies, users, events).process(resourcesAt("data/full"));
+        assertThat(users.findAll(), hasItem(new User("1", "Alice")));
+    }
+
+    @Test
     void events_empty() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/empty"));
         assertThat(events.findAll(), empty());
@@ -73,6 +82,16 @@ public class DataLoaderTest {
     void events_full() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/full"));
         assertThat(events.findAll(), hasSize(6));
+    }
+
+    @Test
+    void events_mapping() throws Exception {
+        new DataLoader(movies, users, events).process(resourcesAt("data/full"));
+        assertThat(events.findAll(), hasItems(
+                new MovieRatedEvent("1", "1", 4),
+                new MovieRatedEvent("1", "2", 5),
+                new MovieViewedEvent("1", "2", 90)
+        ));
     }
 
     private Path resourcesAt(String location) throws Exception {
