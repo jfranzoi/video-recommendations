@@ -19,6 +19,9 @@ import static org.hamcrest.Matchers.empty;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UserEventsRepositoryTest {
 
+    private static final String STAR_WARS = "1";
+    private static final String TOY_STORY = "2";
+
     @Autowired
     private UserEventsRepository repository;
 
@@ -28,13 +31,24 @@ public class UserEventsRepositoryTest {
     }
 
     @Test
-    void saveMany() {
-        repository.save(new MovieViewedEvent("1", "1", 99));
-        repository.save(new MovieRatedEvent("1", "2", 5));
+    void saveMany_differentContext() {
+        repository.save(new MovieViewedEvent("1", STAR_WARS, 99));
+        repository.save(new MovieRatedEvent("1", TOY_STORY, 5));
 
         assertThat(repository.findAll(), contains(
-                new MovieViewedEvent("1", "1", 99),
-                new MovieRatedEvent("1", "2", 5)
+                new MovieViewedEvent("1", STAR_WARS, 99),
+                new MovieRatedEvent("1", TOY_STORY, 5)
+        ));
+    }
+
+    @Test
+    void saveMany_sameContext() {
+        repository.save(new MovieViewedEvent("1", STAR_WARS, 20));
+        repository.save(new MovieRatedEvent("1", STAR_WARS, 3));
+
+        assertThat(repository.findAll(), contains(
+                new MovieViewedEvent("1", STAR_WARS, 20),
+                new MovieRatedEvent("1", STAR_WARS, 3)
         ));
     }
 }

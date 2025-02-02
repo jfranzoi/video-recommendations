@@ -26,7 +26,7 @@ public class UsersAcceptanceTest extends BaseAcceptanceTest {
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.user.name", is("Alice")));
-        assertThat(result.getBody(), hasJsonPath("$.events[*].type", contains("rate", "view")));
+        assertThat(result.getBody(), hasJsonPath("$.events[*].type", contains("rated", "viewed")));
     }
 
     @Test
