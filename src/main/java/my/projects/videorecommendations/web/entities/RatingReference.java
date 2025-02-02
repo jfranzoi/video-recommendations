@@ -4,13 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieReference {
-    private String id;
-    private String title;
-    private List<RatingReference> ratings;
+public class RatingReference {
+    private int value;
 }

@@ -8,7 +8,7 @@ import my.projects.videorecommendations.data.entities.UserRating.Type;
 
 import java.util.Optional;
 
-public class Ratings {
+public class RatingPolicies {
 
     public Optional<UserRating> rate(UserEvent event) {
         if (event instanceof MovieRatedEvent) return rate((MovieRatedEvent) event);

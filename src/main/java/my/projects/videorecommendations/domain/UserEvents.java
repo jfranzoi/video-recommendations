@@ -30,7 +30,7 @@ public class UserEvents {
     public void on(UserEvent event) {
         log.info("User event occurred: [{}]", event);
         eventsRepository.save(event);
-        new Ratings().rate(event).ifPresent(x -> ratingsRepository.save(x));
+        new MovieRatings(ratingsRepository).on(event);
     }
 
     private Specification<UserEvent> byUser(User user) {

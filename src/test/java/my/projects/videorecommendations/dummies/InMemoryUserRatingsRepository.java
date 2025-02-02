@@ -6,7 +6,7 @@ import my.projects.videorecommendations.data.entities.UserRating;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryUserRatingsRepository implements UserRatingsRepository {
+public class InMemoryUserRatingsRepository extends EmptySpecificationRepository<UserRating> implements UserRatingsRepository {
     private ArrayList<UserRating> ratings = new ArrayList<>();
 
     @Override

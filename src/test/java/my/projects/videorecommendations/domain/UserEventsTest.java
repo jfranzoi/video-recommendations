@@ -27,7 +27,7 @@ public class UserEventsTest {
     @Test
     void ratings_explicit() {
         new UserEvents(events, ratings).on(new MovieRatedEvent("1", "1", 5));
-        assertThat(ratings.findAll(), contains(
+        assertThat(ratings.findAll(null), contains(
                 new UserRating("1", "1", 5, Type.EXPLICIT)
         ));
     }
@@ -35,7 +35,7 @@ public class UserEventsTest {
     @Test
     void ratings_implicit() {
         new UserEvents(events, ratings).on(new MovieViewedEvent("1", "1", 100));
-        assertThat(ratings.findAll(), contains(
+        assertThat(ratings.findAll(null), contains(
                 new UserRating("1", "1", 5, Type.IMPLICIT)
         ));
     }
@@ -43,6 +43,6 @@ public class UserEventsTest {
     @Test
     void ratings_none() {
         new UserEvents(events, ratings).on(new MovieViewedEvent("1", "1", 0));
-        assertThat(ratings.findAll(), empty());
+        assertThat(ratings.findAll(null), empty());
     }
 }

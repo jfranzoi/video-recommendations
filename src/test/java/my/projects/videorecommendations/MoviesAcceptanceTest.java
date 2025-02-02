@@ -20,6 +20,7 @@ public class MoviesAcceptanceTest extends BaseAcceptanceTest {
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.results", hasSize(10)));
+        assertThat(result.getBody(), hasJsonPath("$.results[*].ratings[*].value", not(empty())));
     }
 
     @Test

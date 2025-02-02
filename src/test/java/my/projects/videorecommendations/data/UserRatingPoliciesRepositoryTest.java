@@ -13,14 +13,14 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 
 @PersistenceTest
-public class UserRatingsRepositoryTest {
+public class UserRatingPoliciesRepositoryTest {
 
     @Autowired
     private UserRatingsRepository repository;
 
     @Test
     void none() {
-        assertThat(repository.findAll(), empty());
+        assertThat(repository.findAll(null), empty());
     }
 
     @Test
@@ -28,7 +28,7 @@ public class UserRatingsRepositoryTest {
         repository.save(new UserRating("1", STAR_WARS, 3, Type.EXPLICIT));
         repository.save(new UserRating("1", TOY_STORY, 5, Type.EXPLICIT));
 
-        assertThat(repository.findAll(), contains(
+        assertThat(repository.findAll(null), contains(
                 new UserRating("1", STAR_WARS, 3, Type.EXPLICIT),
                 new UserRating("1", TOY_STORY, 5, Type.EXPLICIT)
         ));
@@ -39,7 +39,7 @@ public class UserRatingsRepositoryTest {
         repository.save(new UserRating("1", STAR_WARS, 3, Type.EXPLICIT));
         repository.save(new UserRating("1", STAR_WARS, 5, Type.EXPLICIT));
 
-        assertThat(repository.findAll(), contains(
+        assertThat(repository.findAll(null), contains(
                 new UserRating("1", STAR_WARS, 5, Type.EXPLICIT)
         ));
     }
