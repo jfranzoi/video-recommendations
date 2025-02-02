@@ -26,11 +26,8 @@ public class UsersController {
     }
 
     private UserHistory toHistory(User user) {
-        return UserHistory.builder()
-                .user(UserReference.builder()
-                        .id(user.getId())
-                        .name(user.getName())
-                        .build())
-                .build();
+        return new UserHistory(
+                new UserReference(user.getId(), user.getName())
+        );
     }
 }

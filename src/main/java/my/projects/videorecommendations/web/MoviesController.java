@@ -24,9 +24,9 @@ public class MoviesController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> all(MovieFilter filter) {
-        return ResponseEntity.ok(MovieResults.builder()
-                .results(toReferences(new Movies(repository).all(filter)))
-                .build());
+        return ResponseEntity.ok(new MovieResults(
+                toReferences(new Movies(repository).all(filter))
+        ));
     }
 
     private List<MovieReference> toReferences(List<Movie> movies) {
@@ -36,9 +36,6 @@ public class MoviesController {
     }
 
     private MovieReference toReference(Movie movie) {
-        return MovieReference.builder()
-                .id(movie.getId())
-                .title(movie.getTitle())
-                .build();
+        return new MovieReference(movie.getId(), movie.getTitle());
     }
 }

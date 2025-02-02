@@ -61,11 +61,11 @@ public class DataLoader {
     }
 
     private Movie toMovie(MovieRow row) {
-        return Movie.builder()
-                .id(row.movie_id)
-                .title(row.title)
-                .genres(toCollection(row.genres))
-                .build();
+        return new Movie(
+                row.movie_id,
+                row.title,
+                toCollection(row.genres)
+        );
     }
 
     private User toUser(UserRow row) {

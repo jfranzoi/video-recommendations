@@ -44,12 +44,11 @@ public class DataLoaderTest {
     @Test
     void movies_mapping() throws Exception {
         new DataLoader(movies, users, events).process(resourcesAt("data/full"));
-        assertThat(movies.findAll(null), hasItem(Movie.builder()
-                .id("1")
-                .title("Toy Story")
-                .genres(Arrays.asList("Adventure", "Animation", "Children", "Comedy", "Fantasy"))
-                .build()
-        ));
+        assertThat(movies.findAll(null), hasItem(new Movie(
+                "1",
+                "Toy Story",
+                Arrays.asList("Adventure", "Animation", "Children", "Comedy", "Fantasy")
+        )));
     }
 
     @Test

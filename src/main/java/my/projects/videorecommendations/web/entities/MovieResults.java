@@ -1,14 +1,15 @@
 package my.projects.videorecommendations.web.entities;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MovieResults {
-    @Builder.Default
     private List<MovieReference> results = new ArrayList<>();
 }

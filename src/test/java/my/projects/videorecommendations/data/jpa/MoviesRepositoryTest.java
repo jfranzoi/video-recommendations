@@ -28,10 +28,11 @@ public class MoviesRepositoryTest {
 
     @Test
     void saveOne() {
-        repository.save(Movie.builder()
-                .id("99").title("Love Boat").genres(Arrays.asList("Comedy", "Romance"))
-                .build()
-        );
+        repository.save(new Movie(
+                "99",
+                "Love Boat",
+                Arrays.asList("Comedy", "Romance")
+        ));
 
         assertThat(repository.findAll(null), contains(allOf(
                 hasProperty("id", is("99")),
