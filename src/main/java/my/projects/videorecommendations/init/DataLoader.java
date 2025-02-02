@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import my.projects.videorecommendations.data.EventsRepository;
 import my.projects.videorecommendations.data.MoviesRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import my.projects.videorecommendations.data.entities.User;
+import my.projects.videorecommendations.data.entities.UserEvent;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -22,11 +24,13 @@ public class DataLoader {
 
     private final MoviesRepository movies;
     private final UsersRepository users;
+    private final EventsRepository events;
     private final CsvMapper mapper;
 
-    public DataLoader(MoviesRepository movies, UsersRepository users) {
+    public DataLoader(MoviesRepository movies, UsersRepository users, EventsRepository events) {
         this.movies = movies;
         this.users = users;
+        this.events = events;
         this.mapper = new CsvMapper();
     }
 
@@ -34,6 +38,7 @@ public class DataLoader {
         log.info("Processing data at {}", data);
         process(data.resolve("movies.csv"), MovieRow.class, x -> movies.save(toMovie(x)));
         process(data.resolve("users.csv"), UserRow.class, x -> users.save(toUser(x)));
+        process(data.resolve("ratings.csv"), RatingRow.class, x -> events.save(toEvent(x)));
     }
 
     private <T> void process(Path source, Class<T> type, Consumer<T> action) {
@@ -70,6 +75,10 @@ public class DataLoader {
                 .build();
     }
 
+    private UserEvent toEvent(RatingRow row) {
+        return new UserEvent(row.user_id + "_" + row.movie_id);
+    }
+
     private List<String> toCollection(String value) {
         return Arrays.asList(value.split(COLLECTION_SEPARATOR));
     }
@@ -85,5 +94,13 @@ public class DataLoader {
     static class UserRow {
         private String user_id;
         private String username;
+    }
+
+    @Data
+    static class RatingRow {
+        private String user_id;
+        private String movie_id;
+        private Integer rating;
+        private Integer view_percentage;
     }
 }

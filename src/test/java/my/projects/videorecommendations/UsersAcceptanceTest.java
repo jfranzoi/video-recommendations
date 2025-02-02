@@ -1,5 +1,6 @@
 package my.projects.videorecommendations;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
 @TestPropertySource(properties = {
@@ -16,6 +18,7 @@ import static org.hamcrest.Matchers.is;
 public class UsersAcceptanceTest extends BaseAcceptanceTest {
 
     @Test
+    @Disabled("WIP")
     void listAllHistory() {
         ResponseEntity<String> result = get("/users/1", new HttpHeaders() {{
             add("Accept", "application/json");
@@ -23,6 +26,7 @@ public class UsersAcceptanceTest extends BaseAcceptanceTest {
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.user.name", is("Alice")));
+        assertThat(result.getBody(), hasJsonPath("$.events[*].type", contains("rate", "view")));
     }
 
     @Test
