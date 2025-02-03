@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,4 +20,7 @@ public class Movie {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> genres;
+
+    @OneToMany(mappedBy = "movieId")
+    private List<UserRating> ratings = new ArrayList<>();
 }

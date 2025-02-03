@@ -22,7 +22,13 @@ public class MovieRatingsTest {
     }
 
     @Test
-    void ratings_explicit() {
+    void none() {
+        new MovieRatings(repository).on(new MovieViewedEvent("1", "1", 0));
+        assertThat(repository.findAll(null), empty());
+    }
+
+    @Test
+    void onRated_explicit() {
         new MovieRatings(repository).on(new MovieRatedEvent("1", "1", 5));
         assertThat(repository.findAll(null), contains(
                 new UserRating("1", "1", 5, Type.EXPLICIT)
@@ -30,16 +36,10 @@ public class MovieRatingsTest {
     }
 
     @Test
-    void ratings_implicit() {
+    void onViewed_implicit() {
         new MovieRatings(repository).on(new MovieViewedEvent("1", "1", 100));
         assertThat(repository.findAll(null), contains(
                 new UserRating("1", "1", 5, Type.IMPLICIT)
         ));
-    }
-
-    @Test
-    void ratings_none() {
-        new MovieRatings(repository).on(new MovieViewedEvent("1", "1", 0));
-        assertThat(repository.findAll(null), empty());
     }
 }

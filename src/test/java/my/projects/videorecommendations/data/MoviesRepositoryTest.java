@@ -26,7 +26,8 @@ public class MoviesRepositoryTest {
         repository.save(new Movie(
                 "99",
                 "Love Boat",
-                Arrays.asList("Comedy", "Romance")
+                Arrays.asList("Comedy", "Romance"),
+                Arrays.asList()
         ));
 
         assertThat(repository.findAll(null), contains(allOf(

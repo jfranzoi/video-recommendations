@@ -50,7 +50,8 @@ public class DataLoaderTest {
         assertThat(movies.findAll(null), hasItem(new Movie(
                 "1",
                 "Toy Story",
-                Arrays.asList("Adventure", "Animation", "Children", "Comedy", "Fantasy")
+                Arrays.asList("Adventure", "Animation", "Children", "Comedy", "Fantasy"),
+                Arrays.asList()
         )));
     }
 
