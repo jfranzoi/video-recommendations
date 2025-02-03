@@ -12,5 +12,6 @@ import java.util.List;
 public class MovieReference {
     private String id;
     private String title;
+    private Double rating;
     private List<RatingReference> ratings;
 }

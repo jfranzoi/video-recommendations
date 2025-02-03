@@ -7,14 +7,16 @@ import my.projects.videorecommendations.data.entities.UserEvent;
 @Slf4j
 public class MovieRatings {
     private final UserRatingsRepository ratingsRepository;
+    private final RatingPolicies ratingPolicies;
 
     public MovieRatings(UserRatingsRepository ratingsRepository) {
         this.ratingsRepository = ratingsRepository;
+        this.ratingPolicies = new RatingPolicies();
     }
 
     public void on(UserEvent event) {
         log.info("User event occurred: [{}]", event);
-        new RatingPolicies().rate(event).ifPresent(x -> ratingsRepository.save(x));
+        ratingPolicies.rate(event).ifPresent(x -> ratingsRepository.save(x));
     }
 
 }

@@ -23,4 +23,11 @@ public class Movie {
 
     @OneToMany(mappedBy = "movieId")
     private List<UserRating> ratings = new ArrayList<>();
+
+    public Double rating() {
+        return ratings.isEmpty() ? null :
+                getRatings().stream()
+                        .mapToDouble(x -> x.getRating())
+                        .average().getAsDouble();
+    }
 }
