@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.UserRatingsRepository;
 import my.projects.videorecommendations.data.entities.MovieRatedEvent;
+import my.projects.videorecommendations.data.entities.MovieViewedEvent;
 import my.projects.videorecommendations.data.entities.UserEvent;
 import my.projects.videorecommendations.domain.MovieRatings;
 import my.projects.videorecommendations.domain.UserEvents;
@@ -44,10 +45,22 @@ public class EventsController {
             return Optional.of(toMovieRated(details));
         }
 
+        if ("viewed".equals(details.getType())) {
+            return Optional.of(toMovieViewed(details));
+        }
+
         return Optional.empty();
     }
 
-    private MovieRatedEvent toMovieRated(EventDetails details) {
-        return new MovieRatedEvent(details.getUser(), details.getMovie(), Integer.parseInt(details.getValue()));
+    private UserEvent toMovieRated(EventDetails details) {
+        return new MovieRatedEvent(details.getUser(), details.getMovie(), toNumber(details));
+    }
+
+    private UserEvent toMovieViewed(EventDetails details) {
+        return new MovieViewedEvent(details.getUser(), details.getMovie(), toNumber(details));
+    }
+
+    private int toNumber(EventDetails details) {
+        return Integer.parseInt(details.getValue());
     }
 }

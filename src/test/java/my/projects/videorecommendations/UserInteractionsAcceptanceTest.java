@@ -38,4 +38,28 @@ public class UserInteractionsAcceptanceTest extends BaseAcceptanceTest {
                 allOf(hasEntry("title", "Pulp Fiction"), (Matcher) hasEntry("rating", 5.0))
         )));
     }
+
+    @Test
+    void ingestMovieViewed() {
+        HashMap<String, String> event = new HashMap<>() {{
+            put("type", "viewed");
+            put("value", "100");
+            put("movie", "5");
+            put("user", "1");
+        }};
+
+        ResponseEntity<String> result = put("/events", event, new HttpHeaders() {{
+            add("Content-Type", "application/json");
+        }});
+
+        assertThat(result.getStatusCode(), is(HttpStatus.ACCEPTED));
+
+        ResponseEntity<String> movies = get("/movies", new HttpHeaders() {{
+            add("Accept", "application/json");
+        }});
+
+        assertThat(movies.getBody(), hasJsonPath("$.results[*].['title','rating']", hasItem(
+                allOf(hasEntry("title", "The Lion King"), (Matcher) hasEntry("rating", 5.0))
+        )));
+    }
 }

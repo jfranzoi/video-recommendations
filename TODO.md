@@ -16,7 +16,7 @@
 
 * user interactions
   - (DONE) user events, on movie rated
-  - (TODO) user events, on movie viewed
+  - (DONE) user events, on movie viewed
   - (TODO) user events, on any: recommendations adjusted
 
 * user recommendations
