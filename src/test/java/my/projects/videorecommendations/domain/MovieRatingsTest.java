@@ -4,7 +4,6 @@ import my.projects.videorecommendations.data.entities.MovieRatedEvent;
 import my.projects.videorecommendations.data.entities.MovieViewedEvent;
 import my.projects.videorecommendations.data.entities.UserRating;
 import my.projects.videorecommendations.data.entities.UserRating.Type;
-import my.projects.videorecommendations.dummies.InMemoryUserEventsRepository;
 import my.projects.videorecommendations.dummies.InMemoryUserRatingsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,36 +12,34 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 
-public class UserEventsTest {
+public class MovieRatingsTest {
 
-    private InMemoryUserEventsRepository events;
-    private InMemoryUserRatingsRepository ratings;
+    private InMemoryUserRatingsRepository repository;
 
     @BeforeEach
     void setUp() {
-        events = new InMemoryUserEventsRepository();
-        ratings = new InMemoryUserRatingsRepository();
+        repository = new InMemoryUserRatingsRepository();
     }
 
     @Test
     void ratings_explicit() {
-        new UserEvents(events, ratings).on(new MovieRatedEvent("1", "1", 5));
-        assertThat(ratings.findAll(null), contains(
+        new MovieRatings(repository).on(new MovieRatedEvent("1", "1", 5));
+        assertThat(repository.findAll(null), contains(
                 new UserRating("1", "1", 5, Type.EXPLICIT)
         ));
     }
 
     @Test
     void ratings_implicit() {
-        new UserEvents(events, ratings).on(new MovieViewedEvent("1", "1", 100));
-        assertThat(ratings.findAll(null), contains(
+        new MovieRatings(repository).on(new MovieViewedEvent("1", "1", 100));
+        assertThat(repository.findAll(null), contains(
                 new UserRating("1", "1", 5, Type.IMPLICIT)
         ));
     }
 
     @Test
     void ratings_none() {
-        new UserEvents(events, ratings).on(new MovieViewedEvent("1", "1", 0));
-        assertThat(ratings.findAll(null), empty());
+        new MovieRatings(repository).on(new MovieViewedEvent("1", "1", 0));
+        assertThat(repository.findAll(null), empty());
     }
 }

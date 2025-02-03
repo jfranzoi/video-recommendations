@@ -9,6 +9,7 @@ import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.UserRatingsRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.*;
+import my.projects.videorecommendations.domain.MovieRatings;
 import my.projects.videorecommendations.domain.UserEvents;
 
 import java.io.IOException;
@@ -42,8 +43,11 @@ public class DataLoader {
 
         process(data.resolve("movies.csv"), MovieRow.class, x -> moviesRepository.save(toMovie(x)));
         process(data.resolve("users.csv"), UserRow.class, x -> usersRepository.save(toUser(x)));
-        process(data.resolve("ratings.csv"), RatingRow.class, x ->
-                new UserEvents(userEventsRepository, userRatingsRepository).on(toEvent(x))
+        process(data.resolve("ratings.csv"), RatingRow.class, x -> {
+                    UserEvent event = toEvent(x);
+                    new UserEvents(userEventsRepository).on(event);
+                    new MovieRatings(userRatingsRepository).on(event);
+                }
         );
     }
 

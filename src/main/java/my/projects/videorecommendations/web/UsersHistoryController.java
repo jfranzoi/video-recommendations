@@ -41,7 +41,7 @@ public class UsersHistoryController {
     }
 
     private UserHistoryDetails toHistoryDetails(User user, UserHistoryFilter filter) {
-        List<UserEvent> events = new UserEvents(userEventsRepository, userRatingsRepository).historyBy(user, filter);
+        List<UserEvent> events = new UserEvents(userEventsRepository).historyBy(user, filter);
         return new UserHistoryDetails(
                 toUserReference(user),
                 events.stream().map(x -> toUserEventReference(x)).toList()

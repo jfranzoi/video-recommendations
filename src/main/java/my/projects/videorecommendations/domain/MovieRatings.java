@@ -1,5 +1,6 @@
 package my.projects.videorecommendations.domain;
 
+import lombok.extern.slf4j.Slf4j;
 import my.projects.videorecommendations.data.UserRatingsRepository;
 import my.projects.videorecommendations.data.entities.Movie;
 import my.projects.videorecommendations.data.entities.UserEvent;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
+@Slf4j
 public class MovieRatings {
     private final UserRatingsRepository ratingsRepository;
 
@@ -16,6 +18,7 @@ public class MovieRatings {
     }
 
     public void on(UserEvent event) {
+        log.info("User event occurred: [{}]", event);
         new RatingPolicies().rate(event).ifPresent(x -> ratingsRepository.save(x));
     }
 
