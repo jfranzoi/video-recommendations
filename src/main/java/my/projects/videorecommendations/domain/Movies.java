@@ -19,7 +19,9 @@ public class Movies {
 
     public List<Movie> all(MovieFilter filter) {
         log.info("Collecting movies, by: [{}]", filter);
-        return repository.findAll(byGenre(filter).and(byRatingMin(filter)));
+        return repository.findAll(byGenre(filter).and(
+                byRatingMin(filter).or(byRatingMax(filter))
+        ));
     }
 
     private Specification<Movie> byGenre(MovieFilter filter) {
@@ -28,20 +30,34 @@ public class Movies {
                 .orElse(Specification.where(null));
     }
 
+    private Specification<Movie> byGenre(String value) {
+        return (root, query, cb) -> cb.isMember(value, root.get("genres"));
+    }
+
     private Specification<Movie> byRatingMin(MovieFilter filter) {
         return Optional.ofNullable(filter.getRating().getMin())
                 .map(x -> byRatingMin(x))
-                .orElse(null);
-    }
-
-    private Specification<Movie> byGenre(String value) {
-        return (root, query, cb) -> cb.isMember(value, root.get("genres"));
+                .orElse(Specification.where(null));
     }
 
     private Specification<Movie> byRatingMin(Integer value) {
         return (root, query, cb) -> {
             query.groupBy(root.get("id"));
             query.having(cb.greaterThanOrEqualTo(cb.avg(root.get("ratings").get("rating")), value.doubleValue()));
+            return null;
+        };
+    }
+
+    private Specification<Movie> byRatingMax(MovieFilter filter) {
+        return Optional.ofNullable(filter.getRating().getMax())
+                .map(x -> byRatingMax(x))
+                .orElse(Specification.where(null));
+    }
+
+    private Specification<Movie> byRatingMax(Integer value) {
+        return (root, query, cb) -> {
+            query.groupBy(root.get("id"));
+            query.having(cb.lessThanOrEqualTo(cb.avg(root.get("ratings").get("rating")), value.doubleValue()));
             return null;
         };
     }

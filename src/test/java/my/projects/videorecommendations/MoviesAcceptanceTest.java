@@ -67,4 +67,16 @@ public class MoviesAcceptanceTest extends BaseAcceptanceTest {
                 allOf(hasEntry("title", "Star Wars: Return of the Jedi"), (Matcher) hasEntry("rating", 4.0))
         )));
     }
+
+    @Test
+    void listByRating_max() {
+        ResponseEntity<String> result = get("/movies?rating.max=3", new HttpHeaders() {{
+            add("Accept", "application/json");
+        }});
+
+        assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody(), hasJsonPath("$.results[*].['title','rating']", contains(
+                allOf(hasEntry("title", "Die Hard"), (Matcher) hasEntry("rating", 3.0))
+        )));
+    }
 }

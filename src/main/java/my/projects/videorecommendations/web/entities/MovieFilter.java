@@ -10,5 +10,6 @@ public class MovieFilter {
     @Data
     public static class RatingFilter {
         private Integer min;
+        private Integer max;
     }
 }

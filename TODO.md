@@ -4,7 +4,7 @@
   - (DONE) movies, list all
   - (DONE) movies, list by genre
   - (DONE) movies, list by min (avg) rating
-  - (TODO) movies, list by max (avg) rating
+  - (DONE) movies, list by max (avg) rating
   - (TODO) [NTH] movies, search by title, exact
   - (TODO) [NTH] movies, search by title, matching (at least one word)
   - (TODO) [NTH] movies, search by genres, matching (at least one)
