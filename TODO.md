@@ -9,13 +9,13 @@
   - (TODO) [NTH] movies, search by title, matching (at least one word)
   - (TODO) [NTH] movies, search by genres, matching (at least one)
 
-* users interactions (history)
+* users history
   - (DONE) user events, list all
   - (DONE) user events, list ratings only
   - (DONE) user events, list views only
 
-* user interactions (ingestion)
-  - (TODO) user events, on movie rated
+* user interactions
+  - (DONE) user events, on movie rated
   - (TODO) user events, on movie viewed
   - (TODO) user events, on any: recommendations adjusted
 

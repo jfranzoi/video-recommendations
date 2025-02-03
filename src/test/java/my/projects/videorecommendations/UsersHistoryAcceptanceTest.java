@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class UsersAcceptanceTest extends BaseAcceptanceTest {
+public class UsersHistoryAcceptanceTest extends BaseAcceptanceTest {
 
     @Test
     void listAllHistory() {

@@ -37,7 +37,7 @@ public class UserEvents {
     private Specification<UserEvent> byFilter(UserHistoryFilter filter) {
         return Optional.ofNullable(filter.getType())
                 .map(x -> byFilter(x))
-                .orElse(null);
+                .orElse(Specification.where(null));
     }
 
     private Specification<UserEvent> byFilter(String type) {

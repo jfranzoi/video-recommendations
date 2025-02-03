@@ -24,6 +24,10 @@ public abstract class BaseAcceptanceTest {
         return restTemplate.exchange(locally(location), HttpMethod.GET, new HttpEntity<>(headers), String.class);
     }
 
+    protected ResponseEntity<String> put(String location, Object body, HttpHeaders headers) {
+        return restTemplate.exchange(locally(location), HttpMethod.PUT, new HttpEntity<>(body, headers), String.class);
+    }
+
     private String locally(String value) {
         return "http://localhost:" + port + value;
     }
