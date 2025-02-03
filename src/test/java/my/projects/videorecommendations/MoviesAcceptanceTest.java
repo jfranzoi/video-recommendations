@@ -13,11 +13,13 @@ import static org.hamcrest.Matchers.*;
 
 public class MoviesAcceptanceTest extends BaseAcceptanceTest {
 
+    private final HttpHeaders ACCEPT_JSON = new HttpHeaders() {{
+        add("Accept", "application/json");
+    }};
+
     @Test
     void listAllMovies() {
-        ResponseEntity<String> result = get("/movies", new HttpHeaders() {{
-            add("Accept", "application/json");
-        }});
+        ResponseEntity<String> result = get("/movies", ACCEPT_JSON);
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.results", hasSize(10)));
@@ -33,9 +35,7 @@ public class MoviesAcceptanceTest extends BaseAcceptanceTest {
 
     @Test
     void listByGenre() {
-        ResponseEntity<String> result = get("/movies?genre=Action", new HttpHeaders() {{
-            add("Accept", "application/json");
-        }});
+        ResponseEntity<String> result = get("/movies?genre=Action", ACCEPT_JSON);
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.results[*].title", containsInAnyOrder(
@@ -47,9 +47,7 @@ public class MoviesAcceptanceTest extends BaseAcceptanceTest {
 
     @Test
     void listByGenre_noResults() {
-        ResponseEntity<String> result = get("/movies?genre=Horror", new HttpHeaders() {{
-            add("Accept", "application/json");
-        }});
+        ResponseEntity<String> result = get("/movies?genre=Horror", ACCEPT_JSON);
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.results", empty()));
@@ -57,9 +55,7 @@ public class MoviesAcceptanceTest extends BaseAcceptanceTest {
 
     @Test
     void listByRating_min() {
-        ResponseEntity<String> result = get("/movies?rating.min=4", new HttpHeaders() {{
-            add("Accept", "application/json");
-        }});
+        ResponseEntity<String> result = get("/movies?rating.min=4", ACCEPT_JSON);
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.results[*].['title','rating']", containsInAnyOrder(
@@ -70,9 +66,7 @@ public class MoviesAcceptanceTest extends BaseAcceptanceTest {
 
     @Test
     void listByRating_max() {
-        ResponseEntity<String> result = get("/movies?rating.max=3", new HttpHeaders() {{
-            add("Accept", "application/json");
-        }});
+        ResponseEntity<String> result = get("/movies?rating.max=3", ACCEPT_JSON);
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.results[*].['title','rating']", contains(

@@ -13,11 +13,13 @@ import static org.hamcrest.Matchers.is;
 
 public class UsersHistoryAcceptanceTest extends BaseAcceptanceTest {
 
+    private final HttpHeaders ACCEPT_JSON = new HttpHeaders() {{
+        add("Accept", "application/json");
+    }};
+
     @Test
     void listAllHistory() {
-        ResponseEntity<String> result = get("/users/1", new HttpHeaders() {{
-            add("Accept", "application/json");
-        }});
+        ResponseEntity<String> result = get("/users/1", ACCEPT_JSON);
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.user.name", is("Alice")));
@@ -27,9 +29,7 @@ public class UsersHistoryAcceptanceTest extends BaseAcceptanceTest {
 
     @Test
     void listRatingsOnly() {
-        ResponseEntity<String> result = get("/users/2?type=rated", new HttpHeaders() {{
-            add("Accept", "application/json");
-        }});
+        ResponseEntity<String> result = get("/users/2?type=rated", ACCEPT_JSON);
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.user.name", is("Bob")));
@@ -39,9 +39,7 @@ public class UsersHistoryAcceptanceTest extends BaseAcceptanceTest {
 
     @Test
     void listViewsOnly() {
-        ResponseEntity<String> result = get("/users/2?type=viewed", new HttpHeaders() {{
-            add("Accept", "application/json");
-        }});
+        ResponseEntity<String> result = get("/users/2?type=viewed", ACCEPT_JSON);
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.user.name", is("Bob")));
@@ -51,9 +49,7 @@ public class UsersHistoryAcceptanceTest extends BaseAcceptanceTest {
 
     @Test
     void userNotFound() {
-        ResponseEntity<String> result = get("/users/99", new HttpHeaders() {{
-            add("Accept", "application/json");
-        }});
+        ResponseEntity<String> result = get("/users/99", ACCEPT_JSON);
 
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
