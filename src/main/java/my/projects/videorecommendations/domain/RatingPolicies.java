@@ -10,6 +10,12 @@ import java.util.Optional;
 
 public class RatingPolicies {
 
+    public UserRating combine(Optional<UserRating> existing, UserRating occurred) {
+        if (Type.EXPLICIT.equals(occurred.getType())) return occurred;
+        return existing.filter(x -> Type.EXPLICIT.equals(x.getType()))
+                .orElse(occurred);
+    }
+
     public Optional<UserRating> rate(UserEvent event) {
         if (event instanceof MovieRatedEvent) return rate((MovieRatedEvent) event);
         if (event instanceof MovieViewedEvent) return rate((MovieViewedEvent) event);

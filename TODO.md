@@ -17,6 +17,7 @@
 * user interactions
   - (DONE) user events, on movie rated
   - (DONE) user events, on movie viewed
+  - (DONE) user events, on any: user rating updated
   - (TODO) user events, on any: recommendations adjusted
 
 * user recommendations
@@ -37,6 +38,5 @@
 - views, percentage: between 0 and 100
 - ratings, explicit: between 1 (disliked) and 5 (liked)
 - ratings, implicit: 4 for view percentage in (60..80), 5 for view percentage in (80..100)
-- ratings, priority: explicit if available, implicit otherwise
 - user preferred genres: genres of any rated movie
 - user preferred highly rated: rating in (4, 5)

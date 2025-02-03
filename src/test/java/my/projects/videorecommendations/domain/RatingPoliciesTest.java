@@ -18,14 +18,14 @@ public class RatingPoliciesTest {
     private static final String ANY = "99";
 
     @Test
-    void explicit() {
+    void rate_explicit() {
         Optional<UserRating> result = new RatingPolicies().rate(new MovieRatedEvent(ANY, ANY, 5));
         assertThat(result, is(Optional.of(new UserRating(ANY, ANY, 5, Type.EXPLICIT))));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {0, 10, 20, 30, 40, 50, 59})
-    void implicit_skipped(int percentage) {
+    void rate_implicit_skipped(int percentage) {
         Optional<UserRating> result = new RatingPolicies().rate(new MovieViewedEvent(ANY, ANY, percentage));
         assertThat(result, is(Optional.empty()));
     }
@@ -39,8 +39,42 @@ public class RatingPoliciesTest {
             "90,5",
             "100,5",
     })
-    void implicit_rated(int percentage, int expected) {
+    void rate_implicit_rated(int percentage, int expected) {
         Optional<UserRating> result = new RatingPolicies().rate(new MovieViewedEvent(ANY, ANY, percentage));
         assertThat(result, is(Optional.of(new UserRating(ANY, ANY, expected, Type.IMPLICIT))));
+    }
+
+    @Test
+    void combine_new() {
+        UserRating result = new RatingPolicies().combine(
+                Optional.empty(),
+                rating(1, Type.EXPLICIT)
+        );
+
+        assertThat(result, is(rating(1, Type.EXPLICIT)));
+    }
+
+    @Test
+    void combine_existing_explicit_updated() {
+        UserRating result = new RatingPolicies().combine(
+                Optional.of(rating(1, Type.EXPLICIT)),
+                rating(5, Type.EXPLICIT)
+        );
+
+        assertThat(result, is(rating(5, Type.EXPLICIT)));
+    }
+
+    @Test
+    void combine_existing_implicit_updated() {
+        UserRating result = new RatingPolicies().combine(
+                Optional.of(rating(1, Type.IMPLICIT)),
+                rating(5, Type.EXPLICIT)
+        );
+
+        assertThat(result, is(rating(5, Type.EXPLICIT)));
+    }
+
+    private UserRating rating(int rating, Type type) {
+        return new UserRating(ANY, ANY, rating, type);
     }
 }

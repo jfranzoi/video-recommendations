@@ -32,8 +32,8 @@ public class UserInteractionsAcceptanceTest extends BaseAcceptanceTest {
         assertThat(result.getStatusCode(), is(HttpStatus.ACCEPTED));
 
         ResponseEntity<String> movies = get("/movies", ACCEPT_JSON);
-        assertThat(movies.getBody(), hasJsonPath("$.results[*].['title','rating']", hasItem(
-                allOf(hasEntry("title", "Pulp Fiction"), (Matcher) hasEntry("rating", 5.0))
+        assertThat(movies.getBody(), hasJsonPath("$.results[?(@.title == 'Pulp Fiction')].ratings[*]", contains(
+                hasEntry("value", 5)
         )));
     }
 
@@ -46,8 +46,44 @@ public class UserInteractionsAcceptanceTest extends BaseAcceptanceTest {
         assertThat(result.getStatusCode(), is(HttpStatus.ACCEPTED));
 
         ResponseEntity<String> movies = get("/movies", ACCEPT_JSON);
-        assertThat(movies.getBody(), hasJsonPath("$.results[*].['title','rating']", hasItem(
-                allOf(hasEntry("title", "The Lion King"), (Matcher) hasEntry("rating", 5.0))
+        assertThat(movies.getBody(), hasJsonPath("$.results[?(@.title == 'The Lion King')].ratings[*]", contains(
+                hasEntry("value", 5)
+        )));
+    }
+
+    @Test
+    void ingestMovieViewedThenRated() {
+        put("/events", CONTENT_TYPE_JSON, Map.of(
+                "type", "viewed", "value", "100",
+                "movie", "7", "user", "1"
+        ));
+
+        put("/events", CONTENT_TYPE_JSON, Map.of(
+                "type", "rated", "value", "1",
+                "movie", "7", "user", "1"
+        ));
+
+        ResponseEntity<String> movies = get("/movies", ACCEPT_JSON);
+        assertThat(movies.getBody(), hasJsonPath("$.results[?(@.title == 'Forrest Gump')].ratings[*]", contains(
+                hasEntry("value", 1)
+        )));
+    }
+
+    @Test
+    void ingestMovieRatedThenViewed() {
+        put("/events", CONTENT_TYPE_JSON, Map.of(
+                "type", "rated", "value", "1",
+                "movie", "8", "user", "1"
+        ));
+
+        put("/events", CONTENT_TYPE_JSON, Map.of(
+                "type", "viewed", "value", "100",
+                "movie", "8", "user", "1"
+        ));
+
+        ResponseEntity<String> movies = get("/movies", ACCEPT_JSON);
+        assertThat(movies.getBody(), hasJsonPath("$.results[?(@.title == 'The Matrix')].ratings[*]", contains(
+                hasEntry("value", 1)
         )));
     }
 }
