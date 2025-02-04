@@ -8,6 +8,7 @@ import my.projects.videorecommendations.data.entities.Movie;
 import my.projects.videorecommendations.data.entities.UserRating;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.Collection;
 import java.util.List;
 
 public class Recommendations {
@@ -18,11 +19,37 @@ public class Recommendations {
     }
 
     public List<Movie> byUser(String user) {
-        return moviesRepository.findAll(notRatedBy(user));
+        List<Movie> rated = moviesRepository.findAll(ratedBy(user));
+        return moviesRepository.findAll(
+                otherThan(id(rated))
+                        .and(belongingTo(genres(rated)))
+        );
     }
 
-    private Specification<Movie> notRatedBy(String user) {
-        return (root, query, cb) -> root.get("id").in(moviesRatedBy(user, query)).not();
+    private List<String> genres(List<Movie> rated) {
+        return rated.stream().map(x -> x.getGenres())
+                .flatMap(Collection::stream)
+                .toList();
+    }
+
+    private List<String> id(List<Movie> rated) {
+        return rated.stream().map(x -> x.getId()).toList();
+    }
+
+    private Specification<Movie> otherThan(List<String> ids) {
+        return (root, query, cb) -> cb.not(root.get("id").in(ids));
+    }
+
+    private Specification<Movie> belongingTo(List<String> preferredGenres) {
+        return Specification.anyOf(preferredGenres.stream().map(x -> belongingTo(x)).toList());
+    }
+
+    private Specification<Movie> belongingTo(String genre) {
+        return (root, query, cb) -> cb.isMember(genre, root.get("genres"));
+    }
+
+    private Specification<Movie> ratedBy(String user) {
+        return (root, query, cb) -> root.get("id").in(moviesRatedBy(user, query));
     }
 
     private Subquery<?> moviesRatedBy(String user, CriteriaQuery<?> query) {

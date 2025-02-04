@@ -18,18 +18,14 @@ public class UserRecommendationsAcceptanceTest extends BaseAcceptanceTest {
     }};
 
     @Test
-    void notAlreadyRated() {
+    void notAlreadyRated_similarToPreferred() {
         ResponseEntity<String> result = get("/recommendations/1", ACCEPT_JSON);
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.results[*].title", containsInAnyOrder(
-                "Die Hard",
                 "Star Wars: Return of the Jedi",
                 "The Lion King",
-                "Pulp Fiction",
                 "Forrest Gump",
-                "The Matrix",
-                "Goodfellas",
                 "Jurassic Park"
         )));
 

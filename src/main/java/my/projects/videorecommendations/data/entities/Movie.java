@@ -22,6 +22,7 @@ public class Movie {
     private String title;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "movie_genres")
     private List<String> genres;
 
     @OneToMany(mappedBy = "movieId")
