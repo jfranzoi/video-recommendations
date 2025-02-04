@@ -34,6 +34,15 @@ public class MoviesCatalogAcceptanceTest extends BaseAcceptanceTest {
     }
 
     @Test
+    void withDetails() {
+        ResponseEntity<String> result = get("/movies", ACCEPT_JSON);
+
+        assertThat(result.getBody(), hasJsonPath("$.results[?(@.title == 'Toy Story')].genres[*]", contains(
+                "Adventure", "Animation", "Children", "Comedy", "Fantasy"
+        )));
+    }
+
+    @Test
     void listByGenre() {
         ResponseEntity<String> result = get("/movies?genre=Action", ACCEPT_JSON);
 

@@ -14,4 +14,5 @@ public class MovieReference {
     private String title;
     private Integer rating;
     private List<RatingReference> ratings;
+    private List<String> genres;
 }
