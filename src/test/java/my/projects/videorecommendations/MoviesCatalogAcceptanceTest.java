@@ -11,7 +11,7 @@ import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class MoviesAcceptanceTest extends BaseAcceptanceTest {
+public class MoviesCatalogAcceptanceTest extends BaseAcceptanceTest {
 
     private final HttpHeaders ACCEPT_JSON = new HttpHeaders() {{
         add("Accept", "application/json");

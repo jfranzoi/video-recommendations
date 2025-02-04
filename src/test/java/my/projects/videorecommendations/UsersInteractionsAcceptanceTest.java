@@ -1,7 +1,6 @@
 package my.projects.videorecommendations;
 
 import my.projects.videorecommendations.tests.BaseAcceptanceTest;
-import org.hamcrest.Matcher;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,7 @@ import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class UserInteractionsAcceptanceTest extends BaseAcceptanceTest {
+public class UsersInteractionsAcceptanceTest extends BaseAcceptanceTest {
 
     private final HttpHeaders CONTENT_TYPE_JSON = new HttpHeaders() {{
         add("Content-Type", "application/json");

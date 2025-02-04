@@ -1,29 +1,31 @@
 # TODO
 
-* movies
+* movies, catalog
   - (DONE) movies, list all
   - (DONE) movies, list by genre
   - (DONE) movies, list by min (avg) rating
   - (DONE) movies, list by max (avg) rating
-  - (TODO) [NTH] movies, search by title, exact
-  - (TODO) [NTH] movies, search by title, matching (at least one word)
-  - (TODO) [NTH] movies, search by genres, matching (at least one)
 
 * users history
   - (DONE) user events, list all
   - (DONE) user events, list ratings only
   - (DONE) user events, list views only
 
-* user interactions
+* users interactions
   - (DONE) user events, on movie rated
   - (DONE) user events, on movie viewed
   - (DONE) user events, on any: user rating updated
-  - (TODO) user events, on any: recommendations adjusted
 
 * user recommendations
   - (TODO) recommend movies, not rated
   - (TODO) recommend movies, by user preferred genres
+  - (TODO) user events, on any: recommendations adjusted
   - (TODO) [NTH] recommend movies, sorted (by events number)
+
+* movies, search
+  - (TODO) [NTH] movies, search by title, exact
+  - (TODO) [NTH] movies, search by title, matching (at least one word)
+  - (TODO) [NTH] movies, search by genres, matching (at least one)
 
 * deliverables
   - (DONE) git repo
