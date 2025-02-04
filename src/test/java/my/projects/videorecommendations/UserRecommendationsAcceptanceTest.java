@@ -18,7 +18,7 @@ public class UserRecommendationsAcceptanceTest extends BaseAcceptanceTest {
     }};
 
     @Test
-    void notAlreadyRated_similarToPreferred() {
+    void similarToPreferred() {
         ResponseEntity<String> result = get("/recommendations/1", ACCEPT_JSON);
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
@@ -28,6 +28,19 @@ public class UserRecommendationsAcceptanceTest extends BaseAcceptanceTest {
                 "Forrest Gump",
                 "Jurassic Park"
         )));
+    }
 
+    @Test
+    void similarToHighlyRatedOnly() {
+        ResponseEntity<String> result = get("/recommendations/2", ACCEPT_JSON);
+
+        assertThat(result.getStatusCode(), is(HttpStatus.OK));
+        assertThat(result.getBody(), hasJsonPath("$.results[*].title", containsInAnyOrder(
+                "Grumpier Old Men",
+                "Star Wars: Return of the Jedi",
+                "The Lion King",
+                "Forrest Gump",
+                "Jurassic Park"
+        )));
     }
 }

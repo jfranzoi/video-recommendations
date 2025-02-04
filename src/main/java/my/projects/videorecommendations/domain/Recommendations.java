@@ -1,5 +1,6 @@
 package my.projects.videorecommendations.domain;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
@@ -21,9 +22,12 @@ public class Recommendations {
     public List<Movie> byUser(String user) {
         List<Movie> rated = moviesRepository.findAll(ratedBy(user));
         return moviesRepository.findAll(
-                otherThan(id(rated))
-                        .and(belongingTo(genres(rated)))
+                otherThan(id(rated)).and(similarTo(rated))
         );
+    }
+
+    private Specification<Movie> similarTo(List<Movie> rated) {
+        return belongingTo(genres(rated));
     }
 
     private List<String> genres(List<Movie> rated) {
@@ -40,8 +44,8 @@ public class Recommendations {
         return (root, query, cb) -> cb.not(root.get("id").in(ids));
     }
 
-    private Specification<Movie> belongingTo(List<String> preferredGenres) {
-        return Specification.anyOf(preferredGenres.stream().map(x -> belongingTo(x)).toList());
+    private Specification<Movie> belongingTo(List<String> genres) {
+        return Specification.anyOf(genres.stream().map(x -> belongingTo(x)).toList());
     }
 
     private Specification<Movie> belongingTo(String genre) {
@@ -49,14 +53,17 @@ public class Recommendations {
     }
 
     private Specification<Movie> ratedBy(String user) {
-        return (root, query, cb) -> root.get("id").in(moviesRatedBy(user, query));
+        return (root, query, cb) -> root.get("id").in(moviesHighlyRatedBy(user, query, cb));
     }
 
-    private Subquery<?> moviesRatedBy(String user, CriteriaQuery<?> query) {
-        Subquery<?> subquery = query.subquery(String.class);
-        Root<UserRating> userRatings = subquery.from(UserRating.class);
-        subquery.select(userRatings.get("movieId"));
-        subquery.where(userRatings.get("userId").in(user));
-        return subquery;
+    private Subquery<?> moviesHighlyRatedBy(String user, CriteriaQuery<?> query, CriteriaBuilder cb) {
+        Subquery<?> userRatings = query.subquery(String.class);
+        Root<UserRating> root = userRatings.from(UserRating.class);
+        userRatings.select(root.get("movieId"));
+        userRatings.where(cb.and(
+                root.get("userId").in(user),
+                cb.greaterThanOrEqualTo(root.get("rating"), 4)
+        ));
+        return userRatings;
     }
 }

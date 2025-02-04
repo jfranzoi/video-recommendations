@@ -18,9 +18,8 @@
 
 * user recommendations
   - (DONE) recommend movies, similar to preferred genres
-  - (TODO) recommend movies, preferred genres: highly rated
+  - (DONE) recommend movies, preferred genres: highly rated
   - (DONE) recommend movies, not already rated
-  - (TODO) user events, on any: recommendations adjusted
   - (TODO) [NTH] recommend movies, sorted (by events number)
 
 * movies, search
