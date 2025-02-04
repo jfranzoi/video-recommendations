@@ -6,8 +6,7 @@ import my.projects.videorecommendations.data.UserRatingsRepository;
 import my.projects.videorecommendations.data.entities.MovieRatedEvent;
 import my.projects.videorecommendations.data.entities.MovieViewedEvent;
 import my.projects.videorecommendations.data.entities.UserEvent;
-import my.projects.videorecommendations.domain.MovieRatings;
-import my.projects.videorecommendations.domain.UserEvents;
+import my.projects.videorecommendations.domain.UserInteractions;
 import my.projects.videorecommendations.web.entities.EventDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +31,9 @@ public class EventsController {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> ingest(@RequestBody EventDetails details) {
         log.info("Ingesting event, details: [{}]", details);
-        toEvent(details).ifPresent(x -> {
-            new UserEvents(userEventsRepository).on(x);
-            new MovieRatings(userRatingsRepository).on(x);
-        });
+        toEvent(details).ifPresent(x ->
+                new UserInteractions(userEventsRepository, userRatingsRepository).on(x)
+        );
 
         return ResponseEntity.accepted().build();
     }
