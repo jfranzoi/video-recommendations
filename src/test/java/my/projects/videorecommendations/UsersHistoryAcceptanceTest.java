@@ -23,8 +23,8 @@ public class UsersHistoryAcceptanceTest extends BaseAcceptanceTest {
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.user.name", is("Alice")));
-        assertThat(result.getBody(), hasJsonPath("$.events[*].type", contains("rated", "rated")));
-        assertThat(result.getBody(), hasJsonPath("$.events[*].movie", contains("1", "2")));
+        assertThat(result.getBody(), hasJsonPath("$.events[*].type", contains("rated", "viewed", "rated")));
+        assertThat(result.getBody(), hasJsonPath("$.events[*].movie", contains("1", "1", "2")));
     }
 
     @Test

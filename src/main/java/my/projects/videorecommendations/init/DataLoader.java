@@ -9,12 +9,11 @@ import my.projects.videorecommendations.data.UserEventsRepository;
 import my.projects.videorecommendations.data.UserRatingsRepository;
 import my.projects.videorecommendations.data.UsersRepository;
 import my.projects.videorecommendations.data.entities.*;
-import my.projects.videorecommendations.domain.MovieRatings;
-import my.projects.videorecommendations.domain.UserEvents;
 import my.projects.videorecommendations.domain.UserInteractions;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -44,9 +43,16 @@ public class DataLoader {
 
         process(data.resolve("movies.csv"), MovieRow.class, x -> moviesRepository.save(toMovie(x)));
         process(data.resolve("users.csv"), UserRow.class, x -> usersRepository.save(toUser(x)));
-        process(data.resolve("ratings.csv"), RatingRow.class, x ->
-                new UserInteractions(userEventsRepository, userRatingsRepository).on(toEvent(x))
+        process(data.resolve("ratings.csv"), RatingRow.class, x -> toEvents(x).forEach((event) ->
+                new UserInteractions(userEventsRepository, userRatingsRepository).on(event))
         );
+    }
+
+    private List<UserEvent> toEvents(RatingRow row) {
+        List<UserEvent> events = new ArrayList<>();
+        Optional.ofNullable(row.rating).ifPresent(x -> events.add(toMovieRated(row)));
+        Optional.ofNullable(row.view_percentage).ifPresent(x -> events.add(toMovieViewed(row)));
+        return events;
     }
 
     private <T> void process(Path source, Class<T> type, Consumer<T> action) {
@@ -74,12 +80,6 @@ public class DataLoader {
 
     private User toUser(UserRow row) {
         return new User(row.user_id, row.username);
-    }
-
-    private UserEvent toEvent(RatingRow row) {
-        return Optional.ofNullable(row.rating)
-                .map(x -> toMovieRated(row))
-                .orElseGet(() -> toMovieViewed(row));
     }
 
     private UserEvent toMovieRated(RatingRow row) {

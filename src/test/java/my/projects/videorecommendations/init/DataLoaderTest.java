@@ -82,7 +82,16 @@ public class DataLoaderTest {
     @Test
     void events_full() throws Exception {
         new DataLoader(movies, users, events, ratings).process(resourcesAt("data/full"));
-        assertThat(events.findAll(null), hasSize(6));
+        assertThat(events.findAll(null), hasSize(7));
+    }
+
+    @Test
+    void events_manyFromSameRecord() throws Exception {
+        new DataLoader(movies, users, events, ratings).process(resourcesAt("data/full"));
+        assertThat(events.findAll(null), hasItems(
+                new MovieRatedEvent("1", "1", 4),
+                new MovieViewedEvent("1", "1", 85)
+        ));
     }
 
     @Test
