@@ -34,7 +34,7 @@ public class MoviesController {
     private MovieReference toMovieReference(Movie movie) {
         return new MovieReference(
                 movie.getId(), movie.getTitle(),
-                movie.rating(),
+                movie.rating().orElse(null),
                 movie.getRatings().stream().map(x -> toRatingReference(x)).toList()
         );
     }

@@ -26,10 +26,10 @@ public class MoviesAcceptanceTest extends BaseAcceptanceTest {
         assertThat(result.getBody(), hasJsonPath("$.results[*].ratings[*].value", not(empty())));
 
         assertThat(result.getBody(), hasJsonPath("$.results[*].['title','rating']", hasItems(
-                allOf(hasEntry("title", "Toy Story"), (Matcher) hasEntry("rating", 4.5)),
-                allOf(hasEntry("title", "Grumpier Old Men"), (Matcher) hasEntry("rating", 3.5)),
-                allOf(hasEntry("title", "Die Hard"), (Matcher) hasEntry("rating", 3.0)),
-                allOf(hasEntry("title", "Star Wars: Return of the Jedi"), (Matcher) hasEntry("rating", 4.0))
+                allOf(hasEntry("title", "Toy Story"), (Matcher) hasEntry("rating", 4)),
+                allOf(hasEntry("title", "Grumpier Old Men"), (Matcher) hasEntry("rating", 3)),
+                allOf(hasEntry("title", "Die Hard"), (Matcher) hasEntry("rating", 3)),
+                allOf(hasEntry("title", "Star Wars: Return of the Jedi"), (Matcher) hasEntry("rating", 4))
         )));
     }
 
@@ -59,8 +59,8 @@ public class MoviesAcceptanceTest extends BaseAcceptanceTest {
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.results[*].['title','rating']", containsInAnyOrder(
-                allOf(hasEntry("title", "Toy Story"), (Matcher) hasEntry("rating", 4.5)),
-                allOf(hasEntry("title", "Star Wars: Return of the Jedi"), (Matcher) hasEntry("rating", 4.0))
+                allOf(hasEntry("title", "Toy Story"), (Matcher) hasEntry("rating", 4)),
+                allOf(hasEntry("title", "Star Wars: Return of the Jedi"), (Matcher) hasEntry("rating", 4))
         )));
     }
 
@@ -70,7 +70,7 @@ public class MoviesAcceptanceTest extends BaseAcceptanceTest {
 
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
         assertThat(result.getBody(), hasJsonPath("$.results[*].['title','rating']", contains(
-                allOf(hasEntry("title", "Die Hard"), (Matcher) hasEntry("rating", 3.0))
+                allOf(hasEntry("title", "Die Hard"), (Matcher) hasEntry("rating", 3))
         )));
     }
 }
